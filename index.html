@@ -933,56 +933,60 @@ function handleSubmit(e){
   setTimeout(()=>{btn.textContent='Nachricht senden →';e.target.reset();},3000);
 }
 </script>
- <div id="event-liste" style="color: black !important; background: white !important; padding: 20px;">
-  Wird geladen...
-</div>
+ <div id="event-liste" style="display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  </div>
 
 <script>
-  // WICHTIG: Ersetze die Werte zwischen den ' ' Zeichen
   const TOKEN = 'patmNHDR5qubWaDr1.465f8eff55d506f31e2e4bf6507902be92bf580b32686279a42692e47e59f63f'; 
   const BASE_ID = 'appYQDlrfupnI17zQ';
   const TABELLE = 'Events';
 
-  async function start() {
+  async function ladeEvents() {
     const box = document.getElementById('event-liste');
-    console.log("Startet Abfrage...");
-
     try {
       const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABELLE}`, {
         headers: { Authorization: `Bearer ${TOKEN}` }
       });
-
       const data = await response.json();
 
-      if (!response.ok) {
-        box.innerHTML = "❌ Fehler von Airtable: " + (data.error ? data.error.message : response.status);
-        return;
-      }
+      box.innerHTML = ""; 
 
-      if (!data.records || data.records.length === 0) {
-        box.innerHTML = "✅ Verbindung okay, aber Tabelle ist leer!";
-        return;
-      }
-
-      box.innerHTML = ""; // Lade-Text weg
       data.records.forEach(record => {
         const f = record.fields;
-        // Wir nehmen einfach das erste Feld, egal wie es heißt:
-        const titel = f.Name || f.name || Object.values(f)[0] || "Unbenannt";
         
+        // Deine Spalten (Achte auf Großschreibung am Anfang!)
+        const name = f.Name || "Event ohne Namen";
+        const datum = f.Datum || "Termin folgt";
+        const genres = f.Genres || "";
+        const beschreibung = f.Beschreibung || "";
+        const location = f.Location || "";
+        const foto = f.Foto && f.Foto[0] ? f.Foto[0].url : 'https://via.placeholder.com/400x250?text=Kein+Bild';
+
         box.innerHTML += `
-          <div style="border: 2px solid black; margin-bottom: 10px; padding: 10px;">
-            <strong>Gefundenes Event:</strong> ${titel}
+          <div style="width: 320px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); color: #333; transition: transform 0.2s;">
+            <div style="height: 180px; background: url('${foto}') center/cover no-repeat;"></div>
+            <div style="padding: 15px;">
+              <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #ff4757; font-weight: bold;">${genres}</span>
+              <h3 style="margin: 5px 0 10px 0; font-size: 1.3rem; color: #2f3542;">${name}</h3>
+              <div style="font-size: 0.9rem; color: #57606f; margin-bottom: 8px;">
+                <strong>📍</strong> ${location}
+              </div>
+              <div style="font-size: 0.9rem; color: #57606f; margin-bottom: 12px;">
+                <strong>📅</strong> ${datum}
+              </div>
+              <p style="font-size: 0.85rem; line-height: 1.5; color: #747d8c; border-top: 1px solid #f1f2f6; pt: 10px; padding-top: 10px;">
+                ${beschreibung}
+              </p>
+            </div>
           </div>
         `;
       });
-
     } catch (e) {
-      box.innerHTML = "🚨 Script-Fehler: " + e.message;
+      box.innerHTML = "Fehler beim Laden der Galerie.";
     }
   }
-
-  start();
+  ladeEvents();
+</script>
 </script>
 </script>
 </script>
