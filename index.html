@@ -933,91 +933,57 @@ function handleSubmit(e){
   setTimeout(()=>{btn.textContent='Nachricht senden →';e.target.reset();},3000);
 }
 </script>
- <div id="event-liste" style="min-height: 100px; background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; color: black !important;">
+ <div id="event-liste" style="color: black !important; background: white !important; padding: 20px;">
   Wird geladen...
 </div>
 
 <script>
-  // HIER DEINE DATEN EINTRAGEN
-  const MEIN_TOKEN = 'patmNHDR5qubWaDr1.465f8eff55d506f31e2e4bf6507902be92bf580b32686279a42692e47e59f63f'; 
-  const MEINE_BASE_ID = 'appYQDlrfupnI17zQ';
-  const MEINE_TABELLE = 'Events';
+  // WICHTIG: Ersetze die Werte zwischen den ' ' Zeichen
+  const TOKEN = 'patmNHDR5qubWaDr1.465f8eff55d506f31e2e4bf6507902be92bf580b32686279a42692e47e59f63f'; 
+  const BASE_ID = 'appYQDlrfupnI17zQ';
+  const TABELLE = 'Events';
 
-  async function testAnbindung() {
+  async function start() {
     const box = document.getElementById('event-liste');
-    
+    console.log("Startet Abfrage...");
+
     try {
-      const res = await fetch(`https://api.airtable.com/v0/${MEINE_BASE_ID}/${MEINE_TABELLE}`, {
-        headers: { Authorization: `Bearer ${MEIN_TOKEN}` }
+      const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABELLE}`, {
+        headers: { Authorization: `Bearer ${TOKEN}` }
       });
-      
-      const info = await res.json();
-      
-      if (!res.ok) {
-        box.innerHTML = "❌ Airtable sagt: " + (info.error ? info.error.message : "Fehler");
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        box.innerHTML = "❌ Fehler von Airtable: " + (data.error ? data.error.message : response.status);
         return;
       }
 
-      if (!info.records || info.records.length === 0) {
-        box.innerHTML = "✅ Verbindung steht, aber deine Tabelle 'Events' hat keine Einträge!";
+      if (!data.records || data.records.length === 0) {
+        box.innerHTML = "✅ Verbindung okay, aber Tabelle ist leer!";
         return;
       }
 
-      // Wenn wir hier sind, sind Daten da!
-     <script>
-  // DEINE DATEN (bleiben gleich)
-  const MEIN_TOKEN = 'patmNHDR5qubWaDr1.465f8eff55d506f31e2e4bf6507902be92bf580b32686279a42692e47e59f63f'; 
-  const MEINE_BASE_ID = 'appYQDlrfupnI17zQ';
-  const MEINE_TABELLE = 'Events';
-
-  async function ladeEchteEvents() {
-    const box = document.getElementById('event-liste');
-    
-    try {
-      const res = await fetch(`https://api.airtable.com/v0/${MEINE_BASE_ID}/${MEINE_TABELLE}`, {
-        headers: { Authorization: `Bearer ${MEIN_TOKEN}` }
-      });
-      const info = await res.json();
-      
-      if (!res.ok) return; // Fehler ignorieren wir jetzt, da die Leitung ja steht
-
-      box.innerHTML = ""; // Lade-Info löschen
-      box.style.background = "transparent";
-      box.style.border = "none";
-      box.style.display = "flex";
-      box.style.flexWrap = "wrap";
-      box.style.gap = "20px";
-      box.style.justifyContent = "center";
-
-      info.records.forEach(r => {
-        const f = r.fields;
-        
-        // HIER SIND DEINE KATEGORIEN
-        const name = f.Name || "Unbenanntes Event";
-        const datum = f.Datum || "TBA";
-        const genres = f.Genres || "";
-        const beschreibung = f.Beschreibung || "";
-        const location = f.Location || "";
-        
-        // Foto Logik
-        const fotoUrl = f.Foto && f.Foto[0] ? f.Foto[0].url : 'https://via.placeholder.com/300';
+      box.innerHTML = ""; // Lade-Text weg
+      data.records.forEach(record => {
+        const f = record.fields;
+        // Wir nehmen einfach das erste Feld, egal wie es heißt:
+        const titel = f.Name || f.name || Object.values(f)[0] || "Unbenannt";
         
         box.innerHTML += `
-          <div style="background: white; border-radius: 15px; width: 320px; color: black; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-family: sans-serif; display: flex; flex-direction: column;">
-            <img src="${fotoUrl}" style="width: 100%; height: 200px; object-fit: cover;">
-            <div style="padding: 20px; flex-grow: 1;">
-              <span style="background: #eee; padding: 4px 8px; border-radius: 5px; font-size: 0.8rem; color: #555;">${genres}</span>
-              <h3 style="margin: 10px 0 5px 0; font-size: 1.4rem;">${name}</h3>
-              <p style="margin: 0; color: #e44d26; font-weight: bold; font-size: 0.9rem;">📅 ${datum}</p>
-              <p style="margin: 5px 0 15px 0; color: #666; font-size: 0.9rem;">📍 ${location}</p>
-              <p style="line-height: 1.4; color: #333; font-size: 0.95rem;">${beschreibung}</p });
+          <div style="border: 2px solid black; margin-bottom: 10px; padding: 10px;">
+            <strong>Gefundenes Event:</strong> ${titel}
+          </div>
+        `;
+      });
 
-    } catch (fehler) {
-      box.innerHTML = "🚨 Script-Fehler: " + fehler.message;
+    } catch (e) {
+      box.innerHTML = "🚨 Script-Fehler: " + e.message;
     }
   }
 
-  testAnbindung();
+  start();
+</script>
 </script>
 </script>
 </script>
