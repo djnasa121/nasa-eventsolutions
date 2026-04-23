@@ -964,22 +964,53 @@ function handleSubmit(e){
       }
 
       // Wenn wir hier sind, sind Daten da!
-      box.innerHTML = ""; // Lade-Info weg
+     <script>
+  // DEINE DATEN (bleiben gleich)
+  const MEIN_TOKEN = 'DEIN_TOKEN_HIER_REIN'; 
+  const MEINE_BASE_ID = 'DEINE_BASE_ID_HIER_REIN';
+  const MEINE_TABELLE = 'Events';
+
+  async function ladeEchteEvents() {
+    const box = document.getElementById('event-liste');
+    
+    try {
+      const res = await fetch(`https://api.airtable.com/v0/${MEINE_BASE_ID}/${MEINE_TABELLE}`, {
+        headers: { Authorization: `Bearer ${MEIN_TOKEN}` }
+      });
+      const info = await res.json();
+      
+      if (!res.ok) return; // Fehler ignorieren wir jetzt, da die Leitung ja steht
+
+      box.innerHTML = ""; // Lade-Info löschen
       box.style.background = "transparent";
       box.style.border = "none";
+      box.style.display = "flex";
+      box.style.flexWrap = "wrap";
+      box.style.gap = "20px";
+      box.style.justifyContent = "center";
 
       info.records.forEach(r => {
         const f = r.fields;
-        // Wir suchen flexibel nach dem Namen (groß oder klein)
-        const name = f.Name || f.name || "Event ohne Name";
+        
+        // HIER SIND DEINE KATEGORIEN
+        const name = f.Name || "Unbenanntes Event";
+        const datum = f.Datum || "TBA";
+        const genres = f.Genres || "";
+        const beschreibung = f.Beschreibung || "";
+        const location = f.Location || "";
+        
+        // Foto Logik
+        const fotoUrl = f.Foto && f.Foto[0] ? f.Foto[0].url : 'https://via.placeholder.com/300';
         
         box.innerHTML += `
-          <div style="background: white; border: 2px solid black; padding: 15px; margin-bottom: 10px; color: black;">
-            <h3 style="margin: 0;">🎉 ES KLAPPT: ${name}</h3>
-            <p>Schau mal in Airtable nach - das kommt gerade live von dort!</p>
-          </div>
-        `;
-      });
+          <div style="background: white; border-radius: 15px; width: 320px; color: black; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); font-family: sans-serif; display: flex; flex-direction: column;">
+            <img src="${fotoUrl}" style="width: 100%; height: 200px; object-fit: cover;">
+            <div style="padding: 20px; flex-grow: 1;">
+              <span style="background: #eee; padding: 4px 8px; border-radius: 5px; font-size: 0.8rem; color: #555;">${genres}</span>
+              <h3 style="margin: 10px 0 5px 0; font-size: 1.4rem;">${name}</h3>
+              <p style="margin: 0; color: #e44d26; font-weight: bold; font-size: 0.9rem;">📅 ${datum}</p>
+              <p style="margin: 5px 0 15px 0; color: #666; font-size: 0.9rem;">📍 ${location}</p>
+              <p style="line-height: 1.4; color: #333; font-size: 0.95rem;">${beschreibung}</p });
 
     } catch (fehler) {
       box.innerHTML = "🚨 Script-Fehler: " + fehler.message;
