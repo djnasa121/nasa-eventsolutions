@@ -933,62 +933,61 @@ function handleSubmit(e){
   setTimeout(()=>{btn.textContent='Nachricht senden →';e.target.reset();},3000);
 }
 </script>
-  <div id="event-liste" style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;">
-  </div>
+ <div id="event-liste" style="min-height: 100px; background: #f0f0f0; border: 2px dashed #ccc; padding: 20px; color: black !important;">
+  Wird geladen...
+</div>
 
 <script>
- <script>
-  const AIRTABLE_TOKEN = 'patmNHDR5qubWaDr1.465f8eff55d506f31e2e4bf6507902be92bf580b32686279a42692e47e59f63f'; 
-  const BASE_ID = 'appYQDlrfupnI17zQ';
-  const TABLE_NAME = 'Events';
+  // HIER DEINE DATEN EINTRAGEN
+  const MEIN_TOKEN = 'patmNHDR5qubWaDr1.465f8eff55d506f31e2e4bf6507902be92bf580b32686279a42692e47e59f63f'; 
+  const MEINE_BASE_ID = 'appYQDlrfupnI17zQ';
+  const MEINE_TABELLE = 'Events';
 
-  async function ladeEvents() {
-    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
+  async function testAnbindung() {
+    const box = document.getElementById('event-liste');
     
     try {
-      const response = await fetch(url, {
-        headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` }
+      const res = await fetch(`https://api.airtable.com/v0/${MEINE_BASE_ID}/${MEINE_TABELLE}`, {
+        headers: { Authorization: `Bearer ${MEIN_TOKEN}` }
       });
       
-      if (!response.ok) throw new Error('Airtable Zugriff verweigert');
+      const info = await res.json();
+      
+      if (!res.ok) {
+        box.innerHTML = "❌ Airtable sagt: " + (info.error ? info.error.message : "Fehler");
+        return;
+      }
 
-      const data = await response.json();
-      const container = document.getElementById('event-liste');
-      container.innerHTML = ''; 
+      if (!info.records || info.records.length === 0) {
+        box.innerHTML = "✅ Verbindung steht, aber deine Tabelle 'Events' hat keine Einträge!";
+        return;
+      }
 
-      data.records.forEach(record => {
-        const f = record.fields;
+      // Wenn wir hier sind, sind Daten da!
+      box.innerHTML = ""; // Lade-Info weg
+      box.style.background = "transparent";
+      box.style.border = "none";
+
+      info.records.forEach(r => {
+        const f = r.fields;
+        // Wir suchen flexibel nach dem Namen (groß oder klein)
+        const name = f.Name || f.name || "Event ohne Name";
         
-        // Diese Zeilen suchen jetzt sowohl nach "Name" als auch "name" usw.
-        const name = f.Name || f.name || 'Unbenanntes Event';
-        const datum = f.Datum || f.datum || '';
-        const beschreibung = f.Beschreibung || f.beschreibung || '';
-        const ort = f.Location || f.location || '';
-        const genres = f.Genres || f.genres || '';
-        
-        // Foto-Check
-        const fotoObj = f.Foto || f.foto;
-        const fotoUrl = fotoObj && fotoObj[0] ? fotoObj[0].url : 'https://via.placeholder.com/300';
-        
-        const card = `
-          <div style="border: 2px solid black; margin: 10px; padding: 15px; background: white; color: black; max-width: 350px;">
-            <img src="${fotoUrl}" style="width: 100%; height: auto;">
-            <h2>${name}</h2>
-            <p><strong>Wann:</strong> ${datum}</p>
-            <p><strong>Wo:</strong> ${ort}</p>
-            <p><strong>Stil:</strong> ${genres}</p>
-            <p>${beschreibung}</p>
+        box.innerHTML += `
+          <div style="background: white; border: 2px solid black; padding: 15px; margin-bottom: 10px; color: black;">
+            <h3 style="margin: 0;">🎉 ES KLAPPT: ${name}</h3>
+            <p>Schau mal in Airtable nach - das kommt gerade live von dort!</p>
           </div>
         `;
-        container.innerHTML += card;
       });
-    } catch (e) {
-      console.error(e);
-      document.getElementById('event-liste').innerHTML = 'Verbindung fehlgeschlagen: ' + e.message;
+
+    } catch (fehler) {
+      box.innerHTML = "🚨 Script-Fehler: " + fehler.message;
     }
   }
 
-  ladeEvents();
+  testAnbindung();
+</script>
 </script>
 </script>
 </body>
