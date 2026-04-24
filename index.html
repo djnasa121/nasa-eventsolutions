@@ -6,990 +6,749 @@
 <title>NASA EVENTSOLUTIONS – Karlsruhe</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --black: #020202;
-  --white: #f5f5f0;
-  --cyan: #00ffea;
-  --cyan-dim: rgba(0,255,234,0.12);
-  --cyan-mid: rgba(0,255,234,0.45);
-  --gray: #0a0a0a;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+:root{--black:#020202;--white:#f5f5f0;--cyan:#00ffea;--cd:rgba(0,255,234,.12);--cm:rgba(0,255,234,.45);--biz-bg:#f8f7f2;--biz-ink:#0f1117;--biz-gold:#c8a84b;--biz-gold20:rgba(200,168,75,.18);--biz-line:rgba(15,17,23,.1);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
 body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none;}
-
-/* CURSOR */
 #cursor{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--cyan-mid);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:24px 60px;background:linear-gradient(to bottom,rgba(2,2,2,.95) 0%,transparent 100%);backdrop-filter:blur(8px);}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--cm);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:22px 60px;background:linear-gradient(to bottom,rgba(2,2,2,.96),transparent);backdrop-filter:blur(10px);}
 .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.25em;color:var(--white);text-decoration:none;cursor:none;}
 .nav-logo span{color:var(--cyan);}
-.nav-links{display:flex;gap:36px;list-style:none;align-items:center;}
-.nav-links a{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,245,240,.5);text-decoration:none;transition:color .25s;cursor:none;}
+.nav-links{display:flex;gap:30px;list-style:none;align-items:center;}
+.nav-links a{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,245,240,.48);text-decoration:none;transition:color .22s;cursor:none;}
 .nav-links a:hover,.nav-links a.active{color:var(--cyan);}
-.nav-cta{background:var(--cyan)!important;color:var(--black)!important;padding:10px 22px!important;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));font-family:'Space Mono',monospace!important;font-size:.62rem!important;letter-spacing:.15em!important;}
+.nav-cta{background:var(--cyan)!important;color:var(--black)!important;padding:10px 20px!important;font-family:'Space Mono',monospace!important;font-size:.6rem!important;letter-spacing:.14em!important;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
 .nav-cta:hover{background:#fff!important;}
+.page{display:none;min-height:100vh;}.page.active{display:block;}
 
-/* PAGES */
-.page{display:none;min-height:100vh;}
-.page.active{display:block;}
-
-/* ────────────────────────────────── HOME ── */
+/* HERO */
 #home-hero{position:relative;width:100vw;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 60px;overflow:hidden;}
 #three-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;}
 .hero-content{position:relative;z-index:2;max-width:800px;}
-.hero-tag{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase;margin-bottom:22px;opacity:0;animation:fadeUp .8s .2s forwards;}
+.hero-tag{font-family:'Space Mono',monospace;font-size:.63rem;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase;margin-bottom:20px;opacity:0;animation:fadeUp .8s .2s forwards;}
 .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,10vw,10rem);line-height:.92;letter-spacing:.04em;opacity:0;animation:fadeUp .9s .4s forwards;}
 .hero-title .accent{color:var(--cyan);}
-.hero-sub{margin-top:28px;font-size:1rem;font-weight:300;color:rgba(245,245,240,.5);max-width:460px;line-height:1.75;opacity:0;animation:fadeUp .9s .65s forwards;}
-.hero-cta-row{display:flex;gap:20px;margin-top:48px;opacity:0;animation:fadeUp .9s .85s forwards;flex-wrap:wrap;}
-.btn-primary{display:inline-flex;align-items:center;gap:12px;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--black);background:var(--cyan);padding:15px 34px;text-decoration:none;transition:background .25s,transform .2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));cursor:none;}
-.btn-primary:hover{background:#fff;transform:translateX(4px);}
-.btn-ghost{display:inline-flex;align-items:center;gap:12px;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);background:transparent;padding:15px 34px;text-decoration:none;border:1px solid var(--cyan-dim);transition:border-color .25s,background .25s;cursor:none;}
-.btn-ghost:hover{background:var(--cyan-dim);border-color:var(--cyan-mid);}
-.scroll-hint{position:absolute;bottom:40px;left:60px;display:flex;align-items:center;gap:16px;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,245,240,.25);z-index:2;opacity:0;animation:fadeUp 1s 1.2s forwards;}
-.scroll-line{width:50px;height:1px;background:rgba(245,245,240,.15);position:relative;overflow:hidden;}
+.hero-sub{margin-top:26px;font-size:.97rem;font-weight:300;color:rgba(245,245,240,.48);max-width:450px;line-height:1.78;opacity:0;animation:fadeUp .9s .65s forwards;}
+.hero-btns{display:flex;gap:18px;margin-top:44px;flex-wrap:wrap;opacity:0;animation:fadeUp .9s .85s forwards;}
+.scroll-hint{position:absolute;bottom:38px;left:60px;display:flex;align-items:center;gap:14px;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,245,240,.2);z-index:2;opacity:0;animation:fadeUp 1s 1.2s forwards;}
+.scroll-line{width:46px;height:1px;background:rgba(245,245,240,.1);position:relative;overflow:hidden;}
 .scroll-line::after{content:'';position:absolute;left:-100%;top:0;width:100%;height:100%;background:var(--cyan);animation:scanline 2s infinite;}
-.cyan-line{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--cyan),transparent);opacity:.25;}
+.cyan-line{width:100%;height:1px;background:linear-gradient(to right,transparent,var(--cyan),transparent);opacity:.22;}
 
-/* SECTIONS */
-.section{padding:130px 60px;}
-.section-label{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:14px;}
-.section-label::before{content:'';display:inline-block;width:24px;height:1px;background:var(--cyan);}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,6rem);line-height:.95;letter-spacing:.03em;margin-bottom:60px;}
+/* COMMON */
+.section{padding:120px 60px;}
+.section-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.section-label::before{content:'';display:inline-block;width:22px;height:1px;background:var(--cyan);}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,6rem);line-height:.94;letter-spacing:.03em;margin-bottom:56px;}
+.page-hero{padding:148px 60px 68px;background:var(--black);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,9rem);line-height:.92;letter-spacing:.04em;}
 
-/* SERVICES GRID */
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:60px;}
-.service-card{background:#080808;padding:44px 36px;border-top:1px solid rgba(245,245,240,.04);position:relative;overflow:hidden;transition:background .4s;}
-.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.77,0,.18,1);}
-.service-card:hover::before{transform:scaleX(1);}
-.service-card:hover{background:#0d0d0d;}
-.service-num{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--cyan);letter-spacing:.2em;margin-bottom:28px;opacity:.6;}
-.service-icon{width:40px;height:40px;margin-bottom:24px;color:var(--cyan);}
-.service-name{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.05em;margin-bottom:14px;}
-.service-desc{font-size:.87rem;line-height:1.78;color:rgba(245,245,240,.42);font-weight:300;}
+/* BUTTONS */
+.btn-p{display:inline-flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--black);background:var(--cyan);padding:14px 32px;text-decoration:none;transition:background .22s,transform .18s;cursor:none;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+.btn-p:hover{background:#fff;transform:translateX(4px);}
+.btn-g{display:inline-flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);background:transparent;padding:14px 32px;text-decoration:none;border:1px solid var(--cd);transition:border-color .22s,background .22s;cursor:none;}
+.btn-g:hover{background:var(--cd);border-color:var(--cm);}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:#fff;background:var(--biz-gold);padding:11px 24px;text-decoration:none;transition:background .2s,transform .18s;cursor:none;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px));}
+.btn-gold:hover{background:#d4b560;transform:translateX(3px);}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;}
+.svc{background:#080808;padding:42px 34px;border-top:1px solid rgba(245,245,240,.04);position:relative;overflow:hidden;transition:background .35s;}
+.svc::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.77,0,.18,1);}
+.svc:hover::before{transform:scaleX(1);}.svc:hover{background:#0d0d0d;}
+.svc-num{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--cyan);letter-spacing:.2em;margin-bottom:24px;opacity:.55;}
+.svc-icon{width:38px;height:38px;margin-bottom:22px;color:var(--cyan);}
+.svc-name{font-family:'Bebas Neue',sans-serif;font-size:1.65rem;letter-spacing:.05em;margin-bottom:12px;}
+.svc-desc{font-size:.86rem;line-height:1.78;color:rgba(245,245,240,.42);font-weight:300;}
 
 /* ABOUT */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;}
-.about-visual{position:relative;height:480px;border:1px solid var(--cyan-dim);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:center;}
+.about-visual{height:460px;border:1px solid var(--cd);}
 #about-canvas{width:100%;height:100%;}
-.stat-row{display:flex;gap:44px;margin-bottom:50px;}
-.stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.8rem;color:var(--cyan);line-height:1;}
-.stat-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,245,240,.35);margin-top:6px;}
-.about-body{font-size:.96rem;line-height:1.85;color:rgba(245,245,240,.5);font-weight:300;}
+.stat-row{display:flex;gap:40px;margin-bottom:44px;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.6rem;color:var(--cyan);line-height:1;}
+.stat-lbl{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,245,240,.35);margin-top:5px;}
+.about-body{font-size:.95rem;line-height:1.88;color:rgba(245,245,240,.48);font-weight:300;}
 
-/* NEXT EVENTS PREVIEW */
-.events-preview{margin-top:60px;}
-.event-row{display:flex;align-items:center;gap:30px;padding:28px 0;border-bottom:1px solid rgba(245,245,240,.06);transition:background .2s;}
-.event-row:first-child{border-top:1px solid rgba(245,245,240,.06);}
-.event-date{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--cyan);min-width:120px;letter-spacing:.08em;}
-.event-info{flex:1;}
-.event-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.06em;margin-bottom:4px;}
-.event-meta{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.15em;color:rgba(245,245,240,.35);text-transform:uppercase;}
-.event-tag{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--cyan-dim);color:var(--cyan);}
+/* HOME EVENTS */
+.hev-row{display:flex;align-items:center;gap:26px;padding:24px 0;border-bottom:1px solid rgba(245,245,240,.06);}
+.hev-row:first-child{border-top:1px solid rgba(245,245,240,.06);}
+.hev-date{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--cyan);min-width:110px;letter-spacing:.08em;}
+.hev-info{flex:1;}
+.hev-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.06em;margin-bottom:3px;}
+.hev-meta{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.14em;color:rgba(245,245,240,.35);text-transform:uppercase;}
+.hev-tag{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--cd);color:var(--cyan);}
 
 /* CONTACT */
-.contact-wrap{max-width:720px;margin:0 auto;text-align:center;}
-.contact-sub{font-size:.97rem;color:rgba(245,245,240,.42);margin-bottom:60px;font-weight:300;line-height:1.75;}
-.contact-form{display:flex;flex-direction:column;gap:18px;text-align:left;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.form-field{display:flex;flex-direction:column;gap:8px;}
-.form-label{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,245,240,.3);}
-.form-input,.form-textarea{background:#090909;border:1px solid rgba(245,245,240,.07);color:var(--white);padding:15px 18px;font-family:'DM Sans',sans-serif;font-size:.93rem;font-weight:300;outline:none;transition:border-color .25s;width:100%;}
-.form-input:focus,.form-textarea:focus{border-color:var(--cyan);}
-.form-textarea{height:130px;resize:vertical;}
-.form-submit{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--black);background:var(--cyan);border:none;padding:17px 46px;cursor:none;transition:background .25s,transform .2s;align-self:flex-start;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
-.form-submit:hover{background:#fff;transform:translateX(4px);}
-.contact-divider{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--cyan),transparent);margin:50px auto;}
-.contact-direct{display:flex;justify-content:center;gap:60px;flex-wrap:wrap;}
-.contact-item-label{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,245,240,.28);margin-bottom:8px;}
-.contact-item-val{font-size:.95rem;color:var(--cyan);}
+.contact-wrap{max-width:700px;margin:0 auto;text-align:center;}
+.contact-sub{font-size:.96rem;color:rgba(245,245,240,.42);margin-bottom:54px;font-weight:300;line-height:1.78;}
+.cform{display:flex;flex-direction:column;gap:16px;text-align:left;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.ff{display:flex;flex-direction:column;gap:7px;}
+.fl{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,245,240,.24);}
+.fi,.fta{background:#090909;border:1px solid rgba(245,245,240,.07);color:var(--white);padding:14px 17px;font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:300;outline:none;transition:border-color .22s;width:100%;}
+.fi:focus,.fta:focus{border-color:var(--cyan);}
+.fta{height:125px;resize:vertical;}
+.fsub{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--black);background:var(--cyan);border:none;padding:15px 42px;cursor:none;transition:background .22s,transform .18s;align-self:flex-start;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+.fsub:hover{background:#fff;transform:translateX(4px);}
+.cdivider{width:1px;height:46px;background:linear-gradient(to bottom,transparent,var(--cyan),transparent);margin:46px auto;}
+.cdirect{display:flex;justify-content:center;gap:54px;flex-wrap:wrap;}
+.ci-lbl{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,245,240,.24);margin-bottom:7px;}
+.ci-val{font-size:.94rem;color:var(--cyan);}
 
-/* ────────────────────────────────── DJs PAGE ── */
-.page-hero{padding:160px 60px 80px;position:relative;overflow:hidden;}
-.page-hero-bg{position:absolute;inset:0;z-index:0;}
-.page-hero canvas{width:100%;height:100%;}
-.page-hero-content{position:relative;z-index:2;}
-.page-hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,9rem);line-height:.92;letter-spacing:.04em;}
+/* ═══════ DJ GIGS – DARK ═══════ */
+.gigs-wrap{background:var(--black);padding:0 60px 100px;}
+#gigs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:3px;}
+.gig-card{background:#080808;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:background .3s;cursor:none;}
+.gig-card:hover{background:#0e0e0e;}
+.gig-card:hover .gig-img{transform:scale(1.05);}
+.gig-img-wrap{width:100%;aspect-ratio:16/9;overflow:hidden;background:#111;}
+.gig-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}
+.gig-img-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.gig-img-ph svg{width:42px;height:42px;color:var(--cyan);opacity:.14;}
+.gig-body{padding:26px 28px 30px;flex:1;display:flex;flex-direction:column;}
+.gig-genres{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+.gig-genre{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--cd);color:rgba(0,255,234,.5);}
+.gig-name{font-family:'Bebas Neue',sans-serif;font-size:1.65rem;letter-spacing:.05em;line-height:1;margin-bottom:10px;}
+.gig-meta{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+.gig-mr{display:flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:rgba(245,245,240,.36);text-transform:uppercase;}
+.gig-mr svg{width:11px;height:11px;flex-shrink:0;color:var(--cyan);opacity:.6;}
+.gig-desc{font-size:.85rem;line-height:1.72;color:rgba(245,245,240,.38);font-weight:300;flex:1;margin-bottom:22px;}
+.gig-actions{display:flex;gap:9px;flex-wrap:wrap;}
+.cal-btn{display:inline-flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 18px;border:none;cursor:none;background:var(--cyan);color:var(--black);clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));transition:background .2s;}
+.cal-btn:hover{background:#fff;}
+.cal-btn svg{width:12px;height:12px;}
+.sk-card{background:#080808;animation:pulse 1.5s infinite;}
+.sk-img{width:100%;aspect-ratio:16/9;background:#111;}
+.sk-body{padding:26px 28px;display:flex;flex-direction:column;gap:10px;}
+.sk-ln{height:11px;background:#1a1a1a;border-radius:2px;}
+@keyframes pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
 
-.dj-profile{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:80px;}
-.dj-visual{position:relative;}
-.dj-img-wrap{width:100%;aspect-ratio:4/5;background:linear-gradient(135deg,#0a0a0a 0%,#111 50%,#0a0a0a 100%);border:1px solid var(--cyan-dim);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
-.dj-placeholder{position:relative;z-index:2;text-align:center;}
-.dj-placeholder-icon{width:80px;height:80px;color:var(--cyan);opacity:.4;margin:0 auto 16px;}
-.dj-placeholder-text{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:rgba(245,245,240,.2);text-transform:uppercase;}
-.dj-img-wrap canvas{position:absolute;inset:0;width:100%;height:100%;}
-.dj-badge{position:absolute;bottom:-20px;right:-20px;background:var(--cyan);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.15em;padding:16px 24px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+/* ═══════ FRANCHISE – LIGHT ═══════ */
+#franchise-section{background:var(--biz-bg);padding:80px 60px 100px;position:relative;}
+#franchise-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,var(--biz-gold),#e8c96a,var(--biz-gold));}
+.biz-lbl{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.3em;color:var(--biz-gold);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.biz-lbl::before{content:'';display:inline-block;width:22px;height:1px;background:var(--biz-gold);}
+.biz-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,6rem);line-height:.94;letter-spacing:.03em;color:var(--biz-ink);margin-bottom:14px;}
+.biz-sub{font-size:1rem;color:rgba(15,17,23,.54);font-weight:300;line-height:1.75;max-width:560px;margin-bottom:56px;}
+#franchise-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px;}
+.pitch-card{background:#fff;border:1px solid var(--biz-line);display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .3s,transform .3s;cursor:none;position:relative;}
+.pitch-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--biz-gold),#e8c96a);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.77,0,.18,1);}
+.pitch-card:hover::after{transform:scaleX(1);}
+.pitch-card:hover{box-shadow:0 18px 55px rgba(15,17,23,.11);transform:translateY(-4px);}
+.pitch-card:hover .pitch-img{transform:scale(1.04);}
+.pitch-img-wrap{width:100%;aspect-ratio:16/9;overflow:hidden;background:#ede9df;}
+.pitch-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s cubic-bezier(.16,1,.3,1);}
+.pitch-img-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.pitch-img-ph svg{width:42px;height:42px;color:var(--biz-gold);opacity:.26;}
+.pitch-body{padding:30px 30px 34px;flex:1;display:flex;flex-direction:column;}
+.pitch-ey{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--biz-gold);margin-bottom:9px;}
+.pitch-name{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.06em;color:var(--biz-ink);margin-bottom:12px;line-height:1;}
+.pitch-desc{font-size:.88rem;line-height:1.75;color:rgba(15,17,23,.54);font-weight:300;margin-bottom:22px;}
+.pitch-vt-ttl{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--biz-ink);opacity:.36;margin-bottom:11px;}
+.pitch-vt{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:.86rem;color:rgba(15,17,23,.54);line-height:1.55;font-weight:300;}
+.pitch-vt::before{content:'';width:6px;height:6px;background:var(--biz-gold);border-radius:50%;flex-shrink:0;margin-top:6px;}
+.pitch-foot{margin-top:auto;padding-top:22px;border-top:1px solid var(--biz-line);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.pitch-foot-lbl{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--biz-ink);opacity:.3;}
+.sk-pitch{background:#fff;border:1px solid var(--biz-line);animation:pulse 1.5s infinite;}
 
-.dj-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,6vw,6rem);line-height:.92;letter-spacing:.05em;margin-bottom:8px;}
-.dj-tag{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.25em;color:var(--cyan);text-transform:uppercase;margin-bottom:32px;}
-.dj-bio{font-size:.96rem;line-height:1.85;color:rgba(245,245,240,.5);font-weight:300;margin-bottom:40px;}
-.dj-genres{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;}
-.genre-tag{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:8px 18px;border:1px solid var(--cyan-dim);color:var(--cyan-mid);}
-.dj-stats{display:flex;gap:40px;padding:28px 0;border-top:1px solid rgba(245,245,240,.06);border-bottom:1px solid rgba(245,245,240,.06);margin-bottom:40px;}
-.dj-stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--cyan);line-height:1;}
-.dj-stat-label{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,245,240,.3);margin-top:4px;}
+/* EVENTS PAGE */
+.filter-row{display:flex;gap:12px;margin-bottom:44px;flex-wrap:wrap;}
+.fbtn{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(245,245,240,.18);color:rgba(245,245,240,.4);background:transparent;cursor:none;transition:all .22s;}
+.fbtn.active,.fbtn:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cd);}
+.adm-list{display:flex;flex-direction:column;gap:3px;}
+.adm-card{background:#080808;padding:30px 36px;display:grid;grid-template-columns:110px 1fr auto;align-items:center;gap:34px;transition:background .28s;cursor:none;}
+.adm-card:hover{background:#0d0d0d;}
+.adm-day{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--cyan);line-height:1;text-align:center;}
+.adm-mon{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,245,240,.35);text-align:center;}
+.adm-title{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.05em;margin-bottom:5px;}
+.adm-meta{font-family:'Space Mono',monospace;font-size:.59rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,245,240,.35);margin-bottom:9px;}
+.adm-desc{font-size:.84rem;color:rgba(245,245,240,.38);font-weight:300;line-height:1.6;}
+.adm-right{display:flex;flex-direction:column;align-items:flex-end;gap:11px;}
+.evstat{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 13px;border:1px solid;}
+.evstat.upcoming{border-color:var(--cyan);color:var(--cyan);}
+.evstat.sold-out{border-color:rgba(245,245,240,.2);color:rgba(245,245,240,.3);}
+.evstat.free{border-color:#00ff88;color:#00ff88;}
+.del-btn{background:none;border:1px solid rgba(245,245,240,.08);color:rgba(245,245,240,.2);font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.1em;padding:5px 10px;cursor:none;transition:all .2s;}
+.del-btn:hover{border-color:#ff003c;color:#ff003c;}
+.add-ev-box{background:#080808;border:1px dashed var(--cd);padding:44px;text-align:center;cursor:none;transition:background .28s;margin-top:3px;}
+.add-ev-box:hover{background:#0d0d0d;border-color:var(--cm);}
+.add-ev-icon{width:30px;height:30px;color:var(--cyan);margin:0 auto 13px;opacity:.4;}
+.add-ev-txt{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,245,240,.22);}
 
-.residencies{margin-top:80px;}
-.residency-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:40px;}
-.residency-card{background:#080808;padding:32px 28px;border-top:2px solid transparent;transition:border-color .3s,background .3s;}
-.residency-card:hover{border-color:var(--cyan);background:#0d0d0d;}
-.residency-city{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;opacity:.7;}
-.residency-club{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;margin-bottom:8px;}
-.residency-freq{font-size:.83rem;color:rgba(245,245,240,.35);font-weight:300;}
+/* DJS PAGE */
+.dj-profile{display:grid;grid-template-columns:1fr 1fr;gap:74px;align-items:center;}
+.dj-img-wrap{width:100%;aspect-ratio:4/5;background:linear-gradient(135deg,#0a0a0a,#141414);border:1px solid var(--cd);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+#dj-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.dj-ph{position:relative;z-index:2;text-align:center;}
+.dj-ph-icon{width:70px;height:70px;color:var(--cyan);opacity:.26;margin:0 auto 12px;}
+.dj-ph-txt{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.2em;color:rgba(245,245,240,.17);text-transform:uppercase;}
+.dj-badge{position:absolute;bottom:-18px;right:-18px;background:var(--cyan);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.15em;padding:13px 21px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+.dj-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,6vw,6.5rem);line-height:.9;letter-spacing:.05em;margin-bottom:8px;}
+.dj-tag{font-family:'Space Mono',monospace;font-size:.63rem;letter-spacing:.25em;color:var(--cyan);text-transform:uppercase;margin-bottom:26px;}
+.dj-stats{display:flex;gap:34px;padding:22px 0;border-top:1px solid rgba(245,245,240,.06);border-bottom:1px solid rgba(245,245,240,.06);margin-bottom:32px;}
+.dj-sn{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--cyan);line-height:1;}
+.dj-sl{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,245,240,.35);margin-top:4px;}
+.dj-bio{font-size:.93rem;line-height:1.88;color:rgba(245,245,240,.48);font-weight:300;margin-bottom:32px;}
+.genres{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:32px;}
+.genre{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 15px;border:1px solid var(--cd);color:var(--cm);}
+.res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:34px;}
+.res-card{background:#080808;padding:26px 22px;border-top:2px solid transparent;transition:border-color .28s,background .28s;}
+.res-card:hover{border-color:var(--cyan);background:#0d0d0d;}
+.res-city{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:9px;opacity:.62;}
+.res-club{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.06em;margin-bottom:5px;}
+.res-freq{font-size:.81rem;color:rgba(245,245,240,.35);font-weight:300;}
 
-/* ────────────────────────────────── EVENTS PAGE ── */
-.events-controls{display:flex;gap:16px;margin-bottom:50px;flex-wrap:wrap;}
-.filter-btn{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;padding:10px 22px;border:1px solid rgba(245,245,240,.1);color:rgba(245,245,240,.4);background:transparent;cursor:none;transition:all .25s;}
-.filter-btn.active,.filter-btn:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-dim);}
-.events-list{display:flex;flex-direction:column;gap:3px;}
-.event-card{background:#080808;padding:36px 40px;display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:40px;transition:background .3s;cursor:none;}
-.event-card:hover{background:#0d0d0d;}
-.event-card-date{text-align:center;}
-.event-card-day{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--cyan);line-height:1;}
-.event-card-month{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,245,240,.35);}
-.event-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.05em;margin-bottom:8px;}
-.event-card-meta{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,245,240,.35);margin-bottom:12px;}
-.event-card-desc{font-size:.87rem;color:rgba(245,245,240,.4);font-weight:300;line-height:1.65;}
-.event-card-right{display:flex;flex-direction:column;align-items:flex-end;gap:16px;}
-.event-status{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;border:1px solid;}
-.event-status.upcoming{border-color:var(--cyan);color:var(--cyan);}
-.event-status.sold-out{border-color:rgba(245,245,240,.2);color:rgba(245,245,240,.3);}
-.event-status.free{border-color:#00ff88;color:#00ff88;}
-.event-ticket-btn{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--black);background:var(--cyan);padding:10px 20px;text-decoration:none;transition:background .2s;cursor:none;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));}
-.event-ticket-btn:hover{background:#fff;}
+/* FRANCHISE STATIC */
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:18px;}
+.pkg{background:#080808;padding:46px 36px;position:relative;border-top:2px solid rgba(245,245,240,.04);transition:background .3s;}
+.pkg.featured{background:#0d0d0d;border-top-color:var(--cyan);}
+.pkg:hover{background:#0e0e0e;}
+.pkg-badge{position:absolute;top:22px;right:22px;background:var(--cyan);color:var(--black);font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 11px;}
+.pkg-lbl{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px;opacity:.65;}
+.pkg-name{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.06em;margin-bottom:5px;}
+.pkg-price{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:var(--cyan);line-height:1;margin-bottom:6px;}
+.pkg-note{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.14em;color:rgba(245,245,240,.28);text-transform:uppercase;margin-bottom:28px;}
+.pkg-div{height:1px;background:rgba(245,245,240,.06);margin-bottom:28px;}
+.pkg-feat{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px;}
+.pkg-feat li{font-size:.86rem;color:rgba(245,245,240,.48);font-weight:300;display:flex;gap:10px;align-items:flex-start;line-height:1.55;}
+.pkg-feat li::before{content:'→';color:var(--cyan);font-family:'Space Mono',monospace;font-size:.68rem;flex-shrink:0;margin-top:1px;}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:46px;}
+.step{background:#080808;padding:36px 28px;position:relative;}
+.step-n{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;color:var(--cyan);line-height:1;opacity:.1;position:absolute;top:18px;right:20px;}
+.step-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.05em;margin-bottom:12px;}
+.step-desc{font-size:.83rem;color:rgba(245,245,240,.38);font-weight:300;line-height:1.7;}
+.fran-cta{margin-top:90px;background:#080808;padding:70px 56px;display:grid;grid-template-columns:1fr auto;gap:56px;align-items:center;}
+.fran-cta-t{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);line-height:.94;letter-spacing:.04em;}
+.fran-cta-s{font-size:.93rem;color:rgba(245,245,240,.38);margin-top:14px;font-weight:300;}
 
-.add-event-box{background:#080808;border:1px dashed rgba(0,255,234,.2);padding:50px;text-align:center;margin-top:3px;cursor:none;transition:background .3s;}
-.add-event-box:hover{background:#0a0a0a;border-color:var(--cyan-mid);}
-.add-event-icon{width:36px;height:36px;color:var(--cyan);margin:0 auto 16px;opacity:.5;}
-.add-event-text{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,245,240,.25);}
-
-/* ────────────────────────────────── FRANCHISE PAGE ── */
-.franchise-hero-text{max-width:780px;}
-.franchise-intro{font-size:1.1rem;line-height:1.85;color:rgba(245,245,240,.5);font-weight:300;margin-bottom:60px;max-width:620px;}
-
-.franchise-packages{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:20px;}
-.franchise-card{background:#080808;padding:50px 40px;position:relative;overflow:hidden;border-top:2px solid rgba(245,245,240,.04);transition:background .3s;}
-.franchise-card.featured{background:#0d0d0d;border-top-color:var(--cyan);}
-.franchise-card:hover{background:#0e0e0e;}
-.franchise-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;opacity:.7;}
-.franchise-name{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.06em;margin-bottom:6px;}
-.franchise-price{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--cyan);line-height:1;margin-bottom:8px;}
-.franchise-price-note{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.15em;color:rgba(245,245,240,.3);text-transform:uppercase;margin-bottom:32px;}
-.franchise-divider{height:1px;background:rgba(245,245,240,.06);margin-bottom:32px;}
-.franchise-features{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:40px;}
-.franchise-features li{font-size:.88rem;color:rgba(245,245,240,.5);font-weight:300;display:flex;gap:12px;align-items:flex-start;line-height:1.55;}
-.franchise-features li::before{content:'→';color:var(--cyan);font-family:'Space Mono',monospace;font-size:.7rem;flex-shrink:0;margin-top:2px;}
-.franchise-badge{position:absolute;top:24px;right:24px;background:var(--cyan);color:var(--black);font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;padding:6px 12px;}
-
-.how-it-works{margin-top:100px;}
-.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:50px;}
-.step-card{background:#080808;padding:40px 32px;position:relative;}
-.step-num{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--cyan);line-height:1;opacity:.12;position:absolute;top:20px;right:24px;}
-.step-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;margin-bottom:14px;}
-.step-desc{font-size:.85rem;color:rgba(245,245,240,.4);font-weight:300;line-height:1.7;}
-
-.franchise-cta{margin-top:100px;background:#080808;padding:80px 60px;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;}
-.franchise-cta-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);line-height:.95;letter-spacing:.04em;}
-.franchise-cta-sub{font-size:.95rem;color:rgba(245,245,240,.4);margin-top:16px;font-weight:300;}
-
-/* FOOTER */
-footer{border-top:1px solid rgba(245,245,240,.05);padding:34px 60px;display:flex;justify-content:space-between;align-items:center;}
-.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.25em;}
-.footer-logo span{color:var(--cyan);}
-.footer-copy{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.15em;color:rgba(245,245,240,.18);}
-
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
-@keyframes scanline{0%{left:-100%;}100%{left:100%;}}
-.reveal{opacity:0;transform:translateY(38px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1);}
-.reveal.visible{opacity:1;transform:none;}
-
-/* GLITCH */
-.glitch{position:relative;display:inline-block;}
-.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;font-family:'Bebas Neue',sans-serif;}
-.glitch::before{color:var(--cyan);clip-path:polygon(0 0,100% 0,100% 45%,0 45%);animation:glitch1 5s infinite;opacity:0;}
-.glitch::after{color:#ff003c;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%);animation:glitch2 5s infinite;opacity:0;}
-@keyframes glitch1{0%,90%,100%{opacity:0;transform:none;}92%{opacity:.8;transform:translateX(-4px);}94%{opacity:0;}96%{opacity:.6;transform:translateX(4px);}98%{opacity:0;}}
-@keyframes glitch2{0%,90%,100%{opacity:0;transform:none;}93%{opacity:.6;transform:translateX(4px);}95%{opacity:0;}97%{opacity:.5;transform:translateX(-4px);}99%{opacity:0;}}
-
-/* CRT */
-body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.025) 0px,rgba(0,0,0,.025) 1px,transparent 1px,transparent 2px);pointer-events:none;z-index:1000;}
-
-/* MODAL - Add Event */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
 .modal-overlay.open{display:flex;}
-.modal{background:#0a0a0a;border:1px solid var(--cyan-dim);padding:50px;max-width:600px;width:90%;position:relative;max-height:90vh;overflow-y:auto;}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:.05em;margin-bottom:6px;}
-.modal-sub{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:36px;opacity:.7;}
-.modal-close{position:absolute;top:24px;right:24px;background:none;border:none;color:rgba(245,245,240,.3);font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:color .2s;}
+.modal{background:#0a0a0a;border:1px solid var(--cd);padding:46px;max-width:570px;width:90%;position:relative;max-height:90vh;overflow-y:auto;}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:2.3rem;letter-spacing:.05em;margin-bottom:4px;}
+.modal-sub{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:30px;opacity:.62;}
+.modal-close{position:absolute;top:20px;right:20px;background:none;border:none;color:rgba(245,245,240,.3);font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;cursor:none;transition:color .2s;}
 .modal-close:hover{color:var(--cyan);}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  nav{padding:20px 24px;}
-  .nav-links{gap:18px;}
-  #home-hero{padding:0 24px;}
-  .section{padding:90px 24px;}
-  .services-grid{grid-template-columns:1fr;}
-  .about-grid{grid-template-columns:1fr;gap:50px;}
-  .about-visual{height:280px;}
-  .form-row{grid-template-columns:1fr;}
-  footer{flex-direction:column;gap:14px;text-align:center;}
-  .dj-profile{grid-template-columns:1fr;gap:50px;}
-  .residency-grid{grid-template-columns:1fr 1fr;}
-  .franchise-packages{grid-template-columns:1fr;}
-  .steps-grid{grid-template-columns:1fr 1fr;}
-  .franchise-cta{grid-template-columns:1fr;}
-  .event-card{grid-template-columns:80px 1fr;gap:20px;}
-  .event-card-right{grid-column:span 2;flex-direction:row;justify-content:flex-start;}
-  .page-hero{padding:120px 24px 60px;}
+/* FOOTER */
+footer{border-top:1px solid rgba(245,245,240,.05);padding:30px 60px;display:flex;justify-content:space-between;align-items:center;}
+.f-logo{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.25em;}
+.f-logo span{color:var(--cyan);}
+.f-copy{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.14em;color:rgba(245,245,240,.18);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+@keyframes scanline{0%{left:-100%;}100%{left:100%;}}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .82s cubic-bezier(.16,1,.3,1),transform .82s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:none;}
+.glitch{position:relative;display:inline-block;}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;font-family:'Bebas Neue',sans-serif;}
+.glitch::before{color:var(--cyan);clip-path:polygon(0 0,100% 0,100% 45%,0 45%);animation:g1 5s infinite;opacity:0;}
+.glitch::after{color:#ff003c;clip-path:polygon(0 55%,100% 55%,100% 100%,0 100%);animation:g2 5s infinite;opacity:0;}
+@keyframes g1{0%,90%,100%{opacity:0;transform:none;}92%{opacity:.8;transform:translateX(-4px);}94%{opacity:0;}96%{opacity:.6;transform:translateX(4px);}98%{opacity:0;}}
+@keyframes g2{0%,90%,100%{opacity:0;transform:none;}93%{opacity:.6;transform:translateX(4px);}95%{opacity:0;}97%{opacity:.5;transform:translateX(-4px);}99%{opacity:0;}}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.022) 0px,rgba(0,0,0,.022) 1px,transparent 1px,transparent 2px);pointer-events:none;z-index:1000;}
+
+@media(max-width:960px){
+  nav{padding:18px 22px;}.nav-links{gap:14px;}
+  #home-hero,.section,.page-hero,.gigs-wrap,#franchise-section{padding-left:22px;padding-right:22px;}
+  .section{padding-top:80px;padding-bottom:80px;}
+  .services-grid,.pkg-grid{grid-template-columns:1fr;}
+  .about-grid,.dj-profile{grid-template-columns:1fr;gap:44px;}
+  .about-visual{height:260px;}.form-row{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:26px 22px;}
+  .res-grid{grid-template-columns:1fr 1fr;}.steps-grid{grid-template-columns:1fr 1fr;}
+  .fran-cta{grid-template-columns:1fr;}
+  .adm-card{grid-template-columns:80px 1fr;gap:16px;}
+  .adm-right{grid-column:span 2;flex-direction:row;flex-wrap:wrap;}
+  #gigs-grid,#franchise-grid{grid-template-columns:1fr;}
+  #franchise-section{padding-top:70px;padding-bottom:80px;}
 }
 </style>
 </head>
 <body>
-
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
-<!-- ═══ NAV ═══ -->
+<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo" onclick="showPage('home')">NASA <span>EVENT</span>SOLUTIONS</a>
+  <a href="#" class="nav-logo" onclick="showPage('home');return false;">NASA <span>EVENT</span>SOLUTIONS</a>
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
-    <li><a href="#" onclick="showPage('events')" id="nav-events">Events</a></li>
-    <li><a href="#" onclick="showPage('djs')" id="nav-djs">Our DJs</a></li>
-    <li><a href="#" onclick="showPage('franchise')" id="nav-franchise">Franchise</a></li>
-    <li><a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)" class="nav-cta">Kontakt</a></li>
+    <li><a href="#" onclick="showPage('home');return false;" id="nav-home" class="active">Home</a></li>
+    <li><a href="#" onclick="showPage('gigs');return false;" id="nav-gigs">DJ Gigs</a></li>
+    <li><a href="#" onclick="showPage('djs');return false;" id="nav-djs">Our DJs</a></li>
+    <li><a href="#" onclick="showPage('events');return false;" id="nav-events">Events</a></li>
+    <li><a href="#" onclick="showPage('franchise');return false;" id="nav-franchise">Franchise</a></li>
+    <li><a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),120);return false;" class="nav-cta">Kontakt</a></li>
   </ul>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════ PAGE: HOME ═══ -->
+<!-- ══════════ HOME ══════════ -->
 <div id="page-home" class="page active">
-
-  <!-- HERO -->
   <div id="home-hero">
     <canvas id="three-canvas"></canvas>
     <div class="hero-content">
       <p class="hero-tag">// Karlsruhe · Bundesweit · Since 2010</p>
-      <h1 class="hero-title">
-        <span class="glitch" data-text="WE CREATE">WE CREATE</span><br>
-        <span class="accent">MOMENTS</span><br>
-        THAT LAST
-      </h1>
-      <p class="hero-sub">Premium Event-Agentur aus Karlsruhe. Von der Club Night bis zum Corporate Gala Dinner – wir machen Events zu Erlebnissen.</p>
-      <div class="hero-cta-row">
-        <a href="#" class="btn-primary" onclick="showPage('events')">Nächste Events →</a>
-        <a href="#" class="btn-ghost" onclick="showPage('franchise')">Franchise anfragen</a>
+      <h1 class="hero-title"><span class="glitch" data-text="WE CREATE">WE CREATE</span><br><span class="accent">MOMENTS</span><br>THAT LAST</h1>
+      <p class="hero-sub">Premium Event-Agentur aus Karlsruhe. Von der Club Night bis zur Corporate Gala – wir machen Events zu Erlebnissen.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn-p" onclick="showPage('gigs');return false;">DJ Gigs →</a>
+        <a href="#" class="btn-g" onclick="showPage('franchise');return false;">Franchise Info</a>
       </div>
     </div>
     <div class="scroll-hint"><div class="scroll-line"></div>Scroll</div>
   </div>
-
   <div class="cyan-line"></div>
-
-  <!-- SERVICES -->
-  <section class="section" style="background:var(--black);">
-    <div class="reveal">
-      <p class="section-label">Was wir bieten</p>
-      <h2 class="section-title">UNSERE<br><span style="color:var(--cyan)">SERVICES</span></h2>
-    </div>
+  <section class="section" style="background:var(--black)">
+    <div class="reveal"><p class="section-label">Was wir bieten</p><h2 class="section-title">UNSERE<br><span style="color:var(--cyan)">SERVICES</span></h2></div>
     <div class="services-grid reveal">
-      <div class="service-card">
-        <div class="service-num">01</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="10" width="36" height="26" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M4 18h36" stroke="currentColor" stroke-width="1.5"/><circle cx="22" cy="30" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
-        <div class="service-name">Corporate Events</div>
-        <p class="service-desc">Maßgeschneiderte Unternehmensveranstaltungen – Jahrestagungen, Mitarbeiterevents, Gala Dinner. Professionell, präzise, unvergesslich.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">02</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none"><path d="M22 6l4.5 9 10 1.5-7.25 7 1.75 10L22 29l-9 4.5 1.75-10L7.5 16.5l10-1.5L22 6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        <div class="service-name">Club Nights</div>
-        <p class="service-desc">Eigene Brand-Events in Top-Locations. DJ NASA und unser Line-up sorgen für Nächte, über die man noch Jahre spricht.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">03</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none"><rect x="6" y="14" width="32" height="22" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M14 14V10a8 8 0 1116 0v4" stroke="currentColor" stroke-width="1.5"/><circle cx="22" cy="25" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
-        <div class="service-name">Produktlaunches</div>
-        <p class="service-desc">Ihr neues Produkt verdient eine Bühne. Wir inszenieren Launches mit Live-DJ, Licht, Sound und Wow-Faktor.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">04</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="16" stroke="currentColor" stroke-width="1.5"/><path d="M22 12v10l6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        <div class="service-name">Konferenzen</div>
-        <p class="service-desc">Mehrtägige Fachkonferenzen, hybride Formate, Summits – wir managen Komplexität, damit Sie sich aufs Wesentliche konzentrieren.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">05</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none"><path d="M10 34c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="22" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/></svg>
-        <div class="service-name">Teambuilding</div>
-        <p class="service-desc">Erlebnisse, die Teams zusammenschweißen. Kreative Workshops, Live-Musik-Events, Action – wir stärken Ihre Unternehmenskultur.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">06</div>
-        <svg class="service-icon" viewBox="0 0 44 44" fill="none"><path d="M8 36V20l14-12 14 12v16" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="17" y="26" width="10" height="10" stroke="currentColor" stroke-width="1.5"/></svg>
-        <div class="service-name">Franchise Events</div>
-        <p class="service-desc">Starte dein eigenes Event-Business unter unserem Dach. Bewährte Konzepte, volle Unterstützung, starke Brand. <a href="#" onclick="showPage('franchise')" style="color:var(--cyan);text-decoration:none;">Mehr erfahren →</a></p>
-      </div>
+      <div class="svc"><div class="svc-num">01</div><svg class="svc-icon" viewBox="0 0 44 44" fill="none"><rect x="4" y="10" width="36" height="26" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M4 18h36" stroke="currentColor" stroke-width="1.5"/><circle cx="22" cy="30" r="3" stroke="currentColor" stroke-width="1.5"/></svg><div class="svc-name">Corporate Events</div><p class="svc-desc">Maßgeschneiderte Unternehmensveranstaltungen – Jahrestagungen, Gala Dinner, Mitarbeiterevents.</p></div>
+      <div class="svc"><div class="svc-num">02</div><svg class="svc-icon" viewBox="0 0 44 44" fill="none"><path d="M22 6l4.5 9 10 1.5-7.25 7 1.75 10L22 29l-9 4.5 1.75-10L7.5 16.5l10-1.5L22 6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><div class="svc-name">Club Nights</div><p class="svc-desc">Eigene Brand-Events in Top-Locations. DJ NASA und unser Line-up sorgen für unvergessliche Nächte.</p></div>
+      <div class="svc"><div class="svc-num">03</div><svg class="svc-icon" viewBox="0 0 44 44" fill="none"><rect x="6" y="14" width="32" height="22" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M14 14V10a8 8 0 1116 0v4" stroke="currentColor" stroke-width="1.5"/><circle cx="22" cy="25" r="3" stroke="currentColor" stroke-width="1.5"/></svg><div class="svc-name">Produktlaunches</div><p class="svc-desc">Launches mit Live-DJ, Licht, Sound und maximalem Wow-Faktor.</p></div>
+      <div class="svc"><div class="svc-num">04</div><svg class="svc-icon" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="16" stroke="currentColor" stroke-width="1.5"/><path d="M22 12v10l6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><div class="svc-name">Konferenzen</div><p class="svc-desc">Mehrtägige Fachkonferenzen, hybride Formate, Summits – wir managen die Komplexität.</p></div>
+      <div class="svc"><div class="svc-num">05</div><svg class="svc-icon" viewBox="0 0 44 44" fill="none"><path d="M10 34c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="22" cy="16" r="6" stroke="currentColor" stroke-width="1.5"/></svg><div class="svc-name">Teambuilding</div><p class="svc-desc">Workshops, Live-Musik-Events, Action – wir stärken Unternehmenskultur durch Erlebnisse.</p></div>
+      <div class="svc"><div class="svc-num">06</div><svg class="svc-icon" viewBox="0 0 44 44" fill="none"><path d="M8 36V20l14-12 14 12v16" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><rect x="17" y="26" width="10" height="10" stroke="currentColor" stroke-width="1.5"/></svg><div class="svc-name">Franchise Events</div><p class="svc-desc">Starte dein Event-Business unter unserem Dach. <a href="#" onclick="showPage('franchise');return false;" style="color:var(--cyan);text-decoration:none">Mehr erfahren →</a></p></div>
     </div>
   </section>
-
   <div class="cyan-line"></div>
-
-  <!-- ABOUT -->
-  <section class="section" id="about" style="background:#040404;">
+  <section class="section" id="about" style="background:#040404">
     <div class="about-grid">
-      <div class="about-visual reveal">
-        <canvas id="about-canvas"></canvas>
-      </div>
+      <div class="about-visual reveal"><canvas id="about-canvas"></canvas></div>
       <div class="reveal">
-        <p class="section-label">Über uns</p>
-        <h2 class="section-title">WIR SIND<br><span style="color:var(--cyan)">NASA</span></h2>
-        <div class="stat-row">
-          <div><div class="stat-num">14+</div><div class="stat-label">Jahre Erfahrung</div></div>
-          <div><div class="stat-num">500+</div><div class="stat-label">Events realisiert</div></div>
-          <div><div class="stat-num">KA</div><div class="stat-label">Heimatstadt</div></div>
-        </div>
-        <p class="about-body">NASA EVENTSOLUTIONS steht für kompromisslose Qualität, kreative Vision und nahtlose Ausführung. Gegründet in Karlsruhe, aktiv bundesweit.<br><br>Hinter NASA EVENTSOLUTIONS steht DJ NASA – Gründer, Visionär und Headliner in einem. Was als Leidenschaft fürs Auflegen begann, ist heute eine der aufstrebenden Event-Agenturen in der Region. Unser Team aus erfahrenen Professionals bringt jede Vision zum Leben – von der ersten Idee bis zum letzten Beat.</p>
-        <div style="margin-top:36px;">
-          <a href="#" class="btn-ghost" onclick="showPage('djs')">DJ NASA kennenlernen →</a>
-        </div>
+        <p class="section-label">Über uns</p><h2 class="section-title">WIR SIND<br><span style="color:var(--cyan)">NASA</span></h2>
+        <div class="stat-row"><div><div class="stat-num">14+</div><div class="stat-lbl">Jahre Erfahrung</div></div><div><div class="stat-num">500+</div><div class="stat-lbl">Events realisiert</div></div><div><div class="stat-num">KA</div><div class="stat-lbl">Heimatstadt</div></div></div>
+        <p class="about-body">NASA EVENTSOLUTIONS steht für kompromisslose Qualität, kreative Vision und nahtlose Ausführung. Gegründet in Karlsruhe, aktiv bundesweit.<br><br>Hinter NASA EVENTSOLUTIONS steht DJ NASA – Gründer, Visionär und Headliner in einem. Was als Leidenschaft fürs Auflegen begann, ist heute eine der aufstrebenden Event-Agenturen in der Region.</p>
+        <div style="margin-top:30px"><a href="#" class="btn-g" onclick="showPage('djs');return false;">DJ NASA kennenlernen →</a></div>
       </div>
     </div>
   </section>
-
   <div class="cyan-line"></div>
-
-  <!-- NEXT EVENTS PREVIEW -->
-  <section class="section" style="background:var(--black);">
-    <div class="reveal">
-      <p class="section-label">Live Dates</p>
-      <h2 class="section-title">NÄCHSTE<br><span style="color:var(--cyan)">EVENTS</span></h2>
-    </div>
-    <div class="events-preview reveal" id="home-events-list">
-      <!-- Dynamisch befüllt -->
-    </div>
-    <div style="margin-top:40px;" class="reveal">
-      <a href="#" class="btn-ghost" onclick="showPage('events')">Alle Events anzeigen →</a>
-    </div>
+  <section class="section" style="background:var(--black)">
+    <div class="reveal"><p class="section-label">Live Dates</p><h2 class="section-title">NÄCHSTE<br><span style="color:var(--cyan)">EVENTS</span></h2></div>
+    <div id="home-events-list" class="reveal"></div>
+    <div style="margin-top:34px" class="reveal"><a href="#" class="btn-g" onclick="showPage('events');return false;">Alle Events →</a></div>
   </section>
-
   <div class="cyan-line"></div>
-
-  <!-- CONTACT -->
-  <section class="section" id="contact" style="background:#040404;">
+  <section class="section" id="contact" style="background:#040404">
     <div class="contact-wrap">
-      <div class="reveal">
-        <p class="section-label" style="justify-content:center;">Jetzt anfragen</p>
-        <h2 class="section-title" style="font-size:clamp(3.5rem,7vw,7rem);">LASS UNS<br><span style="color:var(--cyan)">REDEN</span></h2>
-        <p class="contact-sub">Erzähl uns von deinem Projekt. Wir melden uns innerhalb von 24 Stunden.</p>
-      </div>
-      <form class="contact-form reveal" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-field"><label class="form-label">Name</label><input class="form-input" type="text" placeholder="Max Mustermann" required></div>
-          <div class="form-field"><label class="form-label">Unternehmen</label><input class="form-input" type="text" placeholder="Musterfirma GmbH"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-field"><label class="form-label">E-Mail</label><input class="form-input" type="email" placeholder="max@example.de" required></div>
-          <div class="form-field"><label class="form-label">Telefon</label><input class="form-input" type="tel" placeholder="+49 ..."></div>
-        </div>
-        <div class="form-field"><label class="form-label">Dein Anliegen</label><textarea class="form-textarea" placeholder="Event-Idee, Franchise-Anfrage, Booking ..."></textarea></div>
-        <button type="submit" class="form-submit">Nachricht senden →</button>
+      <div class="reveal"><p class="section-label" style="justify-content:center">Jetzt anfragen</p><h2 class="section-title" style="font-size:clamp(3.5rem,7vw,7rem)">LASS UNS<br><span style="color:var(--cyan)">REDEN</span></h2><p class="contact-sub">Erzähl uns von deinem Projekt. Wir melden uns innerhalb von 24 Stunden.</p></div>
+      <form class="cform reveal" onsubmit="handleSubmit(event)">
+        <div class="form-row"><div class="ff"><label class="fl">Name</label><input class="fi" type="text" placeholder="Max Mustermann" required></div><div class="ff"><label class="fl">Unternehmen</label><input class="fi" type="text" placeholder="Musterfirma GmbH"></div></div>
+        <div class="form-row"><div class="ff"><label class="fl">E-Mail</label><input class="fi" type="email" placeholder="max@example.de" required></div><div class="ff"><label class="fl">Telefon</label><input class="fi" type="tel" placeholder="+49 ..."></div></div>
+        <div class="ff"><label class="fl">Dein Anliegen</label><textarea class="fta" placeholder="Event-Idee, Franchise-Anfrage, Booking ..."></textarea></div>
+        <button type="submit" class="fsub">Nachricht senden →</button>
       </form>
-      <div class="contact-divider"></div>
-      <div class="contact-direct reveal">
-        <div class="contact-item"><div class="contact-item-label">E-Mail</div><div class="contact-item-val">info@nasa-eventsolutions.de</div></div>
-        <div class="contact-item"><div class="contact-item-label">Booking DJ</div><div class="contact-item-val">booking@nasa-eventsolutions.de</div></div>
-        <div class="contact-item"><div class="contact-item-label">Standort</div><div class="contact-item-val">Karlsruhe, BW</div></div>
+      <div class="cdivider"></div>
+      <div class="cdirect reveal">
+        <div><div class="ci-lbl">E-Mail</div><div class="ci-val">info@nasa-eventsolutions.de</div></div>
+        <div><div class="ci-lbl">Booking DJ</div><div class="ci-val">booking@nasa-eventsolutions.de</div></div>
+        <div><div class="ci-lbl">Standort</div><div class="ci-val">Karlsruhe, BW</div></div>
       </div>
     </div>
   </section>
-
-  <footer>
-    <div class="footer-logo">NASA <span>EVENT</span>SOLUTIONS</div>
-    <div class="footer-copy">© 2025 NASA EVENTSOLUTIONS · Karlsruhe · Alle Rechte vorbehalten</div>
-  </footer>
+  <footer><div class="f-logo">NASA <span>EVENT</span>SOLUTIONS</div><div class="f-copy">© 2025 NASA EVENTSOLUTIONS · Karlsruhe · Alle Rechte vorbehalten</div></footer>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ PAGE: DJs ═══ -->
-<div id="page-djs" class="page">
-  <div class="page-hero" style="background:var(--black);padding-top:160px;">
-    <div class="page-hero-content">
-      <p class="section-label">// The Artists</p>
-      <h1 class="page-hero-title reveal"><span style="color:var(--cyan)">OUR</span><br>DJs</h1>
+<!-- ══════════ DJ GIGS ══════════ -->
+<div id="page-gigs" class="page">
+  <div class="page-hero">
+    <p class="section-label reveal">// Airtable Live · Tabelle: Events</p>
+    <h1 class="page-title reveal">DJ <span style="color:var(--cyan)">GIGS</span></h1>
+    <p style="color:rgba(245,245,240,.38);font-weight:300;margin-top:12px;font-size:.95rem;max-width:460px" class="reveal">Alle aktuellen Auftritte – live aus der Datenbank geladen.</p>
+  </div>
+  <div class="gigs-wrap">
+    <div id="gigs-grid">
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-ln" style="width:38%"></div><div class="sk-ln" style="width:68%"></div><div class="sk-ln" style="width:52%"></div></div></div>
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-ln" style="width:44%"></div><div class="sk-ln" style="width:72%"></div><div class="sk-ln" style="width:58%"></div></div></div>
+      <div class="sk-card"><div class="sk-img"></div><div class="sk-body"><div class="sk-ln" style="width:35%"></div><div class="sk-ln" style="width:62%"></div><div class="sk-ln" style="width:48%"></div></div></div>
     </div>
   </div>
+  <footer><div class="f-logo">NASA <span>EVENT</span>SOLUTIONS</div><div class="f-copy">© 2025 NASA EVENTSOLUTIONS</div></footer>
+</div>
 
-  <section class="section" style="background:var(--black);">
-    <!-- DJ NASA PROFIL -->
+<!-- ══════════ OUR DJs ══════════ -->
+<div id="page-djs" class="page">
+  <div class="page-hero"><p class="section-label reveal">// The Artists</p><h1 class="page-title reveal"><span style="color:var(--cyan)">OUR</span> DJs</h1></div>
+  <section class="section" style="background:var(--black);padding-top:0">
     <div class="dj-profile reveal">
-      <div class="dj-visual">
+      <div style="position:relative">
         <div class="dj-img-wrap">
           <canvas id="dj-canvas"></canvas>
-          <div class="dj-placeholder">
-            <svg class="dj-placeholder-icon" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="38" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="20" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="4" fill="currentColor"/><path d="M40 6v14M40 60v14M6 40h14M60 40h14" stroke="currentColor" stroke-width="1.5"/></svg>
-            <div class="dj-placeholder-text">Foto einfügen</div>
-          </div>
+          <div class="dj-ph"><svg class="dj-ph-icon" viewBox="0 0 80 80" fill="none"><circle cx="40" cy="40" r="38" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="20" stroke="currentColor" stroke-width="1.5"/><circle cx="40" cy="40" r="4" fill="currentColor"/><path d="M40 6v14M40 60v14M6 40h14M60 40h14" stroke="currentColor" stroke-width="1.5"/></svg><div class="dj-ph-txt">Foto einfügen</div></div>
         </div>
         <div class="dj-badge">Headliner</div>
       </div>
       <div>
         <div class="dj-name">DJ<br><span style="color:var(--cyan)">NASA</span></div>
         <div class="dj-tag">// Founder · Headliner · Karlsruhe</div>
-        <div class="dj-stats">
-          <div><div class="dj-stat-num">14+</div><div class="dj-stat-label">Jahre am Deck</div></div>
-          <div><div class="dj-stat-num">300+</div><div class="dj-stat-label">Gigs gespielt</div></div>
-          <div><div class="dj-stat-num">∞</div><div class="dj-stat-label">BPM im Herz</div></div>
-        </div>
-        <p class="dj-bio">DJ NASA ist nicht nur Gründer von NASA EVENTSOLUTIONS – er ist das Herzstück der Brand. Seit über 14 Jahren legt er in Clubs und auf Events in Karlsruhe und bundesweit auf und hat sich einen Ruf für energiegeladene Sets und außergewöhnliche Crowd Connection aufgebaut.<br><br>Was ihn ausmacht? Die Fähigkeit, jede Stimmung zu lesen und jeden Floor zum Beben zu bringen – egal ob entspannte Lounge Night, aufgeheizte Club Night oder strahlende Corporate Gala. Mixed bedeutet bei NASA: er spielt, was die Nacht braucht.</p>
-        <div class="dj-genres">
-          <span class="genre-tag">House</span>
-          <span class="genre-tag">Hip-Hop</span>
-          <span class="genre-tag">R&B</span>
-          <span class="genre-tag">Techno</span>
-          <span class="genre-tag">Commercial</span>
-          <span class="genre-tag">Latin</span>
-          <span class="genre-tag">Afrobeats</span>
-        </div>
-        <a href="#" class="btn-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Jetzt buchen →</a>
+        <div class="dj-stats"><div><div class="dj-sn">5+</div><div class="dj-sl">Jahre am Deck</div></div><div><div class="dj-sn">150+</div><div class="dj-sl">Gigs gespielt</div></div><div><div class="dj-sn">∞</div><div class="dj-sl">BPM im Herz</div></div></div>
+        <p class="dj-bio">DJ NASA ist nicht nur Gründer von NASA EVENTSOLUTIONS – er ist das Herzstück der Brand. Seit über 5 Jahren legt er in Clubs und auf Events in Karlsruhe und bundesweit auf.<br><br>Mixed bedeutet bei NASA: er spielt, was die Nacht braucht – vom Lounge-Opener bis zur aufgeheizten Club Night.</p>
+        <div class="genres"><span class="genre">House</span><span class="genre">Hip-Hop</span><span class="genre">R&amp;B</span><span class="genre">Classic Club Banger</span><span class="genre">Commercial</span><span class="genre">Latin</span><span class="genre">Afrobeats</span></div>
+        <a href="#" class="btn-p" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),120);return false;">Jetzt buchen →</a>
       </div>
     </div>
-
-    <!-- RESIDENCIES -->
-    <div class="residencies reveal" style="margin-top:100px;">
-      <p class="section-label">Stammlocations</p>
-      <h2 class="section-title" style="font-size:clamp(2.5rem,5vw,5rem);margin-bottom:40px;">RESIDENCIES &<br><span style="color:var(--cyan)">CLUBS</span></h2>
-      <div class="residency-grid">
-        <div class="residency-card">
-          <div class="residency-city">Karlsruhe</div>
-          <div class="residency-club">Club Eins</div>
-          <div class="residency-freq">Monatlich · Resident DJ</div>
-        </div>
-        <div class="residency-card">
-          <div class="residency-city">Karlsruhe</div>
-          <div class="residency-club">Dein Club</div>
-          <div class="residency-freq">Hier einfügen</div>
-        </div>
-        <div class="residency-card">
-          <div class="residency-city">Stuttgart</div>
-          <div class="residency-club">Dein Club</div>
-          <div class="residency-freq">Hier einfügen</div>
-        </div>
-        <div class="residency-card">
-          <div class="residency-city">Bundesweit</div>
-          <div class="residency-club">Gastgigs</div>
-          <div class="residency-freq">Events & Festivals</div>
-        </div>
+    <div style="margin-top:90px" class="reveal">
+      <p class="section-label">Stammlocations</p><h2 class="section-title" style="font-size:clamp(2.5rem,5vw,5rem);margin-bottom:32px">RESIDENCIES &amp;<br><span style="color:var(--cyan)">CLUBS</span></h2>
+      <div class="res-grid">
+        <div class="res-card"><div class="res-city">Karlsruhe</div><div class="res-club">LB Events</div><div class="res-freq">Monatlich · Residency</div></div>
+        <div class="res-card"><div class="res-city">Karlsruhe</div><div class="res-club">Die Stadtmitte</div><div class="res-freq">Monatlich</div></div>
+        <div class="res-card"><div class="res-city">Bruchsal</div><div class="res-club">Fabrik Bruchsal</div><div class="res-freq">Hier einfügen</div></div>
+        <div class="res-card"><div class="res-city">Bundesweit</div><div class="res-club">Gastgigs</div><div class="res-freq">Events &amp; Festivals</div></div>
       </div>
     </div>
-
-    <!-- WEITERE DJs TEASER -->
-    <div class="reveal" style="margin-top:100px;">
-      <p class="section-label">Das Team wächst</p>
-      <h2 class="section-title" style="font-size:clamp(2.5rem,5vw,5rem);margin-bottom:30px;">WEITERE<br><span style="color:var(--cyan)">ARTISTS</span></h2>
-      <p style="color:rgba(245,245,240,.4);font-weight:300;max-width:500px;line-height:1.75;margin-bottom:40px;">Das NASA-Roster wächst. Neue Artists und Residency-DJs werden in Kürze vorgestellt. Du bist DJ und willst Teil von NASA werden? Meld dich.</p>
-      <a href="#" class="btn-ghost" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">DJ-Bewerbung →</a>
+    <div style="margin-top:90px" class="reveal">
+      <p class="section-label">Das Team wächst</p><h2 class="section-title" style="font-size:clamp(2.5rem,5vw,5rem);margin-bottom:26px">WEITERE<br><span style="color:var(--cyan)">ARTISTS</span></h2>
+      <p style="color:rgba(245,245,240,.36);font-weight:300;max-width:480px;line-height:1.75;margin-bottom:36px">Das NASA-Roster wächst. Du bist DJ und willst Teil von NASA werden? Meld dich.</p>
+      <a href="#" class="btn-g" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),120);return false;">DJ-Bewerbung →</a>
     </div>
   </section>
-  <footer>
-    <div class="footer-logo">NASA <span>EVENT</span>SOLUTIONS</div>
-    <div class="footer-copy">© 2025 NASA EVENTSOLUTIONS · Karlsruhe</div>
-  </footer>
+  <footer><div class="f-logo">NASA <span>EVENT</span>SOLUTIONS</div><div class="f-copy">© 2025 NASA EVENTSOLUTIONS</div></footer>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ PAGE: EVENTS ═══ -->
+<!-- ══════════ EVENTS (Admin) ══════════ -->
 <div id="page-events" class="page">
-  <div class="page-hero" style="background:var(--black);padding-top:160px;">
-    <div class="page-hero-content">
-      <p class="section-label">// Live Dates 2025</p>
-      <h1 class="page-hero-title reveal">NEXT<br><span style="color:var(--cyan)">EVENTS</span></h1>
+  <div class="page-hero"><p class="section-label reveal">// Live Dates 2025</p><h1 class="page-title reveal">NEXT <span style="color:var(--cyan)">EVENTS</span></h1></div>
+  <section class="section" style="background:var(--black);padding-top:0">
+    <div class="filter-row reveal">
+      <button class="fbtn active" onclick="filterEvts('all',this)">Alle</button>
+      <button class="fbtn" onclick="filterEvts('club',this)">Club Nights</button>
+      <button class="fbtn" onclick="filterEvts('corporate',this)">Corporate</button>
+      <button class="fbtn" onclick="filterEvts('festival',this)">Festivals</button>
     </div>
-  </div>
-
-  <section class="section" style="background:var(--black);">
-    <div class="events-controls reveal">
-      <button class="filter-btn active" onclick="filterEvents('all',this)">Alle</button>
-      <button class="filter-btn" onclick="filterEvents('club',this)">Club Nights</button>
-      <button class="filter-btn" onclick="filterEvents('corporate',this)">Corporate</button>
-      <button class="filter-btn" onclick="filterEvents('festival',this)">Festivals</button>
-    </div>
-    <div class="events-list reveal" id="events-list">
-      <!-- dynamisch -->
-    </div>
-    <div class="add-event-box reveal" onclick="openModal()" style="margin-top:4px;">
-      <svg class="add-event-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="currentColor" stroke-width="1.5"/><path d="M18 10v16M10 18h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <div class="add-event-text">+ Neuen Termin hinzufügen (Admin)</div>
+    <div class="adm-list reveal" id="adm-list"></div>
+    <div class="add-ev-box reveal" onclick="openModal()" style="margin-top:3px">
+      <svg class="add-ev-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="currentColor" stroke-width="1.5"/><path d="M18 10v16M10 18h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="add-ev-txt">+ Neuen Termin hinzufügen (Admin)</div>
     </div>
   </section>
-  <footer>
-    <div class="footer-logo">NASA <span>EVENT</span>SOLUTIONS</div>
-    <div class="footer-copy">© 2025 NASA EVENTSOLUTIONS · Karlsruhe</div>
-  </footer>
+  <footer><div class="f-logo">NASA <span>EVENT</span>SOLUTIONS</div><div class="f-copy">© 2025 NASA EVENTSOLUTIONS</div></footer>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ PAGE: FRANCHISE ═══ -->
+<!-- ══════════ FRANCHISE ══════════ -->
 <div id="page-franchise" class="page">
-  <div class="page-hero" style="background:var(--black);padding-top:160px;">
-    <div class="page-hero-content">
-      <p class="section-label">// Business Opportunity</p>
-      <h1 class="page-hero-title reveal">NASA<br><span style="color:var(--cyan)">FRANCHISE</span></h1>
+  <div class="page-hero"><p class="section-label reveal">// Business Opportunity</p><h1 class="page-title reveal">NASA <span style="color:var(--cyan)">FRANCHISE</span></h1></div>
+
+  <!-- LIGHT: Airtable Konzepte -->
+  <div id="franchise-section">
+    <p class="biz-lbl reveal">// Tabelle: Konzepte </p>
+    <h2 class="biz-title reveal">UNSERE<br><span style="color:var(--biz-gold)">KONZEPTE</span></h2>
+    <p class="biz-sub reveal">Bewährte Club Night Konzepte, voll lizenzierbar. Starte dein eigenes Event-Business unter dem NASA-Dach.</p>
+    <div id="franchise-grid">
+      <div class="sk-pitch"><div class="sk-img" style="aspect-ratio:16/9;background:#ede9df"></div><div style="padding:28px;display:flex;flex-direction:column;gap:10px"><div class="sk-ln" style="width:32%;background:#ede9df;height:11px;border-radius:2px"></div><div class="sk-ln" style="width:62%;background:#ede9df;height:11px;border-radius:2px"></div><div class="sk-ln" style="width:82%;background:#ede9df;height:11px;border-radius:2px"></div></div></div>
+      <div class="sk-pitch"><div class="sk-img" style="aspect-ratio:16/9;background:#ede9df"></div><div style="padding:28px;display:flex;flex-direction:column;gap:10px"><div class="sk-ln" style="width:38%;background:#ede9df;height:11px;border-radius:2px"></div><div class="sk-ln" style="width:58%;background:#ede9df;height:11px;border-radius:2px"></div><div class="sk-ln" style="width:74%;background:#ede9df;height:11px;border-radius:2px"></div></div></div>
     </div>
   </div>
 
-  <section class="section" style="background:var(--black);">
-    <div class="franchise-hero-text reveal">
-      <p class="franchise-intro">Starte dein eigenes Event-Business unter dem Dach einer etablierten Brand. NASA EVENTSOLUTIONS bietet dir bewährte Club Night Konzepte, vollständigen Support und eine starke Community – du bringst den Drive.</p>
+  <!-- DARK: Static packages -->
+  <section class="section" style="background:var(--black)">
+    <div class="reveal"><p class="section-label">Lizenzpakete</p><h2 class="section-title" style="font-size:clamp(2.5rem,5vw,5rem)">FRANCHISE<br><span style="color:var(--cyan)">PAKETE</span></h2></div>
+    <div class="pkg-grid reveal">
+      <div class="pkg"><div class="pkg-lbl">Einstieg</div><div class="pkg-name">ORBIT STARTER</div><div class="pkg-price">Auf Anfrage<span style="font-size:1.4rem"></span></div><div class="pkg-note">Einmalige Lizenzgebühr</div><div class="pkg-div"></div><ul class="pkg-feat"><li>1 Konzept · exklusiv für deine Stadt</li><li>NASA Brand-Nutzung 12 Monate</li><li>Event-Playbook &amp; Checklisten</li><li>DJ-Vermittlung (3 Events)</li><li>Marketing-Templates</li><li>Onboarding Call (2h)</li></ul><a href="#" class="btn-g" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),120);return false;">Anfragen →</a></div>
+      <div class="pkg featured"><div class="pkg-badge">Beliebt</div><div class="pkg-lbl">Wachstum</div><div class="pkg-name">ORBIT PRO</div><div class="pkg-price">Auf Anfrage<span style="font-size:1.4rem">€</span></div><div class="pkg-note">Einmalige Lizenzgebühr</div><div class="pkg-div"></div><ul class="pkg-feat"><li>3 Konzepte · exklusiv für deine Region</li><li>NASA Brand-Nutzung 24 Monate</li><li>DJ-Pool Zugang (NASA Roster)</li><li>Coaching Calls (6 Monate)</li><li>Ticket-System Setup</li><li>Exklusives Franchise-Netzwerk</li></ul><a href="#" class="btn-p" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),120);return false;">Anfragen →</a></div>
+      <div class="pkg"><div class="pkg-lbl">Enterprise</div><div class="pkg-name">ORBIT ELITE</div><div class="pkg-price" style="font-size:2rem">Auf Anfrage</div><div class="pkg-note">Individuelles Paket</div><div class="pkg-div"></div><ul class="pkg-feat"><li>Bundesweite Exklusivrechte</li><li>Eigene Sub-Brand möglich</li><li>Dedizierter Account Manager</li><li>Co-Produktion mit NASA Events</li><li>Revenue-Share Modell</li></ul><a href="#" class="btn-g" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),120);return false;">Gespräch vereinbaren →</a></div>
     </div>
-
-    <!-- PACKAGES -->
-    <div class="reveal">
-      <p class="section-label">Pakete</p>
-      <h2 class="section-title" style="font-size:clamp(2.5rem,5vw,5rem);">FRANCHISE<br><span style="color:var(--cyan)">PAKETE</span></h2>
-    </div>
-    <div class="franchise-packages reveal">
-      <div class="franchise-card">
-        <div class="franchise-label">Einstieg</div>
-        <div class="franchise-name">ORBIT STARTER</div>
-        <div class="franchise-price">990<span style="font-size:1.5rem;">€</span></div>
-        <div class="franchise-price-note">Einmalige Lizenzgebühr</div>
-        <div class="franchise-divider"></div>
-        <ul class="franchise-features">
-          <li>1 Club Night Konzept (exklusiv für deine Stadt)</li>
-          <li>NASA Brand-Nutzung für 12 Monate</li>
-          <li>Event-Playbook & Checklisten</li>
-          <li>DJ-Vermittlung für erste 3 Events</li>
-          <li>Marketing-Templates (Flyer, Social Media)</li>
-          <li>Onboarding Call (2h)</li>
-        </ul>
-        <a href="#" class="btn-ghost" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Anfragen →</a>
-      </div>
-      <div class="franchise-card featured">
-        <div class="franchise-badge">Beliebt</div>
-        <div class="franchise-label">Wachstum</div>
-        <div class="franchise-name">ORBIT PRO</div>
-        <div class="franchise-price">2.490<span style="font-size:1.5rem;">€</span></div>
-        <div class="franchise-price-note">Einmalige Lizenzgebühr</div>
-        <div class="franchise-divider"></div>
-        <ul class="franchise-features">
-          <li>3 Club Night Konzepte (exklusiv für deine Region)</li>
-          <li>NASA Brand-Nutzung für 24 Monate</li>
-          <li>Vollständiges Event-Playbook</li>
-          <li>DJ-Pool Zugang (NASA Roster)</li>
-          <li>Professionelles Marketing-Paket</li>
-          <li>Monatliches Coaching Call (6 Monate)</li>
-          <li>Ticket-System Setup Unterstützung</li>
-          <li>Exklusives Franchise-Netzwerk</li>
-        </ul>
-        <a href="#" class="btn-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Anfragen →</a>
-      </div>
-      <div class="franchise-card">
-        <div class="franchise-label">Enterprise</div>
-        <div class="franchise-name">ORBIT ELITE</div>
-        <div class="franchise-price">auf <span style="font-size:2rem;">Anfrage</span></div>
-        <div class="franchise-price-note">Individuelles Paket</div>
-        <div class="franchise-divider"></div>
-        <ul class="franchise-features">
-          <li>Unbegrenzte Konzepte & Bundesweite Exklusivrechte</li>
-          <li>Langfristige Brand-Partnerschaft</li>
-          <li>Eigene Sub-Brand unter NASA-Dach möglich</li>
-          <li>Dedizierter Account Manager</li>
-          <li>Co-Produktion mit NASA Events</li>
-          <li>Revenue-Share Modell</li>
-          <li>Vollständige Betriebsunterstützung</li>
-        </ul>
-        <a href="#" class="btn-ghost" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Gespräch vereinbaren →</a>
-      </div>
-    </div>
-
-    <!-- HOW IT WORKS -->
-    <div class="how-it-works reveal">
-      <p class="section-label">Ablauf</p>
-      <h2 class="section-title" style="font-size:clamp(2.5rem,5vw,5rem);">SO FUNKTIONIERT'S</h2>
+    <div style="margin-top:90px" class="reveal">
+      <p class="section-label">Ablauf</p><h2 class="section-title" style="font-size:clamp(2.5rem,5vw,5rem)">SO FUNKTIONIERT'S</h2>
       <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-num">01</div>
-          <div class="step-title">Erstgespräch</div>
-          <p class="step-desc">Wir lernen uns kennen. Du erzählst uns von deiner Vision, wir erklären das Konzept – kein Druck, kein Sales-Pitch.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">02</div>
-          <div class="step-title">Onboarding</div>
-          <p class="step-desc">Du bekommst Zugang zum NASA-System: Playbooks, Kontakte, Marketing-Assets und dein persönliches Briefing.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">03</div>
-          <div class="step-title">Launch</div>
-          <p class="step-desc">Dein erster Event unter NASA-Brand. Wir unterstützen bei Location, DJ-Booking, Promotion und Technik.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">04</div>
-          <div class="step-title">Wachstum</div>
-          <p class="step-desc">Monatliche Calls, Community-Austausch, neue Konzepte. Du bist nicht allein – das NASA-Netzwerk wächst mit dir.</p>
-        </div>
+        <div class="step"><div class="step-n">01</div><div class="step-title">Erstgespräch</div><p class="step-desc">Wir lernen uns kennen – kein Druck, kein Sales-Pitch.</p></div>
+        <div class="step"><div class="step-n">02</div><div class="step-title">Onboarding</div><p class="step-desc">Zugang zum NASA-System: Playbooks, Marketing-Assets, Briefing.</p></div>
+        <div class="step"><div class="step-n">03</div><div class="step-title">Launch</div><p class="step-desc">Erster Event unter NASA-Brand. Wir unterstützen bei Location, DJ, Promotion.</p></div>
+        <div class="step"><div class="step-n">04</div><div class="step-title">Wachstum</div><p class="step-desc">Monatliche Calls, Community. Das Netzwerk wächst mit dir.</p></div>
       </div>
     </div>
-
-    <!-- CTA -->
-    <div class="franchise-cta reveal">
-      <div>
-        <h2 class="franchise-cta-title">BEREIT FÜR<br><span style="color:var(--cyan)">DEINEN START?</span></h2>
-        <p class="franchise-cta-sub">Schreib uns – wir melden uns innerhalb von 24 Stunden.</p>
-      </div>
-      <div>
-        <a href="#" class="btn-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100)">Jetzt Kontakt aufnehmen →</a>
-      </div>
+    <div class="fran-cta reveal">
+      <div><h2 class="fran-cta-t">BEREIT FÜR<br><span style="color:var(--cyan)">DEINEN START?</span></h2><p class="fran-cta-s">Schreib uns – wir melden uns innerhalb von 24 Stunden.</p></div>
+      <div><a href="#" class="btn-p" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),120);return false;">Jetzt Kontakt →</a></div>
     </div>
   </section>
-  <footer>
-    <div class="footer-logo">NASA <span>EVENT</span>SOLUTIONS</div>
-    <div class="footer-copy">© 2025 NASA EVENTSOLUTIONS · Karlsruhe</div>
-  </footer>
+  <footer><div class="f-logo">NASA <span>EVENT</span>SOLUTIONS</div><div class="f-copy">© 2025 NASA EVENTSOLUTIONS</div></footer>
 </div>
 
-<!-- ═══ ADD EVENT MODAL ═══ -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕ Schließen</button>
     <div class="modal-title">Neues Event</div>
     <div class="modal-sub">// Admin · Termin eintragen</div>
-    <form class="contact-form" onsubmit="addEvent(event)">
-      <div class="form-row">
-        <div class="form-field"><label class="form-label">Event-Titel</label><input class="form-input" id="ev-title" type="text" placeholder="NASA NIGHTS Vol. 12" required></div>
-        <div class="form-field"><label class="form-label">Datum (TT.MM.JJJJ)</label><input class="form-input" id="ev-date" type="text" placeholder="15.08.2025" required></div>
-      </div>
-      <div class="form-row">
-        <div class="form-field"><label class="form-label">Location / Club</label><input class="form-input" id="ev-location" type="text" placeholder="Club Name, Karlsruhe" required></div>
-        <div class="form-field"><label class="form-label">Uhrzeit</label><input class="form-input" id="ev-time" type="text" placeholder="23:00 Uhr"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-field"><label class="form-label">Kategorie</label>
-          <select class="form-input" id="ev-cat">
-            <option value="club">Club Night</option>
-            <option value="corporate">Corporate</option>
-            <option value="festival">Festival</option>
-          </select>
-        </div>
-        <div class="form-field"><label class="form-label">Status</label>
-          <select class="form-input" id="ev-status">
-            <option value="upcoming">Upcoming</option>
-            <option value="free">Eintritt frei</option>
-            <option value="sold-out">Sold Out</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-field"><label class="form-label">Beschreibung</label><textarea class="form-textarea" id="ev-desc" placeholder="Line-up, Infos, Dresscode ..."></textarea></div>
-      <div class="form-field"><label class="form-label">Ticket-Link (optional)</label><input class="form-input" id="ev-tickets" type="url" placeholder="https://..."></div>
-      <button type="submit" class="form-submit">Event speichern →</button>
+    <form class="cform" onsubmit="addEvt(event)">
+      <div class="form-row"><div class="ff"><label class="fl">Event-Titel</label><input class="fi" id="ev-title" type="text" placeholder="NASA NIGHTS Vol. 12" required></div><div class="ff"><label class="fl">Datum (TT.MM.JJJJ)</label><input class="fi" id="ev-date" type="text" placeholder="15.08.2025" required></div></div>
+      <div class="form-row"><div class="ff"><label class="fl">Location</label><input class="fi" id="ev-loc" type="text" placeholder="Club Name, Karlsruhe" required></div><div class="ff"><label class="fl">Uhrzeit</label><input class="fi" id="ev-time" type="text" placeholder="23:00 Uhr"></div></div>
+      <div class="form-row"><div class="ff"><label class="fl">Kategorie</label><select class="fi" id="ev-cat"><option value="club">Club Night</option><option value="corporate">Corporate</option><option value="festival">Festival</option></select></div><div class="ff"><label class="fl">Status</label><select class="fi" id="ev-status"><option value="upcoming">Upcoming</option><option value="free">Eintritt frei</option><option value="sold-out">Sold Out</option></select></div></div>
+      <div class="ff"><label class="fl">Beschreibung</label><textarea class="fta" id="ev-desc" placeholder="Line-up, Infos, Dresscode ..."></textarea></div>
+      <div class="ff"><label class="fl">Ticket-Link (optional)</label><input class="fi" id="ev-tickets" type="url" placeholder="https://..."></div>
+      <button type="submit" class="fsub">Event speichern →</button>
     </form>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ─── EVENTS DATA ─────────────────────────────────────────────────────────────
-let eventsData = JSON.parse(localStorage.getItem('nasa_events') || 'null') || [
-  { id:1, title:'NASA NIGHTS Vol. 1', date:'18.07.2025', day:'18', month:'Jul', location:'Club Platzhalter, Karlsruhe', time:'23:00 Uhr', cat:'club', status:'upcoming', desc:'Die erste offizielle NASA Night – DJ NASA b2b Surprise Guest. Volle Energie, volle Nacht.', tickets:'' },
-  { id:2, title:'Corporate Summer Gala', date:'26.07.2025', day:'26', month:'Jul', location:'Festzelt Messe Karlsruhe', time:'19:00 Uhr', cat:'corporate', status:'upcoming', desc:'Exklusiver Sommerabend für 300 Gäste. Live-Musik, DJ-Set, Fine Dining.', tickets:'' },
-  { id:3, title:'NASA NIGHTS Vol. 2', date:'15.08.2025', day:'15', month:'Aug', location:'Club Platzhalter, Karlsruhe', time:'23:00 Uhr', cat:'club', status:'upcoming', desc:'Vol. 2 – diesmal mit erweitertem Line-Up. Tickets limitiert.', tickets:'' },
-];
+// ════════ AIRTABLE CONFIG ════════
+// ⚠️ TRAGE HIER DEINE ECHTEN DATEN EIN:
+const TOKEN   = 'DEIN_AIRTABLE_TOKEN_HIER';
+const BASE_ID = 'DEINE_BASE_ID_HIER';
 
-function saveEvents(){ localStorage.setItem('nasa_events', JSON.stringify(eventsData)); }
-
-// ─── CURSOR ──────────────────────────────────────────────────────────────────
-const cur = document.getElementById('cursor'), curR = document.getElementById('cursor-ring');
-let mx=-100,my=-100,rx=-100,ry=-100;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-function animCur(){
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
-  curR.style.left=rx+'px';curR.style.top=ry+'px';
-  requestAnimationFrame(animCur);
+async function atFetch(table) {
+  const r = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(table)}`, {
+    headers: { Authorization: `Bearer ${TOKEN}` }
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status} bei Tabelle "${table}"`);
+  return (await r.json()).records;
 }
-animCur();
-document.querySelectorAll('a,button,select').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{curR.style.width='55px';curR.style.height='55px';curR.style.opacity='.4';});
-  el.addEventListener('mouseleave',()=>{curR.style.width='36px';curR.style.height='36px';curR.style.opacity='1';});
+
+// ════════ ICS KALENDER-DOWNLOAD ════════
+function downloadICS(name, datum, location, desc) {
+  let dtS = '20250101T220000Z', dtE = '20250102T060000Z';
+  try {
+    const p = datum.split('.');
+    if (p.length === 3) {
+      const iso = `${p[2]}${p[1].padStart(2,'0')}${p[0].padStart(2,'0')}`;
+      dtS = `${iso}T220000Z`;
+      dtE = `${iso}T060000Z`;
+    }
+  } catch(e) {}
+  const ics = [
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//NASA EVENTSOLUTIONS//DE',
+    'BEGIN:VEVENT',`UID:${Date.now()}@nasa-eventsolutions.de`,
+    `SUMMARY:${name}`,`DTSTART:${dtS}`,`DTEND:${dtE}`,
+    `LOCATION:${location || ''}`,
+    `DESCRIPTION:${(desc || '').replace(/\n/g,'\\n')} - nasa-eventsolutions.de`,
+    'STATUS:CONFIRMED','END:VEVENT','END:VCALENDAR'
+  ].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+  a.download = `${(name || 'event').replace(/\s+/g,'-')}.ics`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ════════ LOAD DJ GIGS ════════
+async function loadGigs() {
+  const grid = document.getElementById('gigs-grid');
+  try {
+    const recs = await atFetch('Events');
+    if (!recs.length) {
+      grid.innerHTML = '<p style="color:rgba(245,245,240,.3);font-family:\'Space Mono\',monospace;font-size:.65rem;letter-spacing:.14em;padding:40px 0">// Keine Gigs gefunden</p>';
+      return;
+    }
+    grid.innerHTML = recs.map(r => {
+      const f = r.fields;
+      const name   = f.Name         || 'Event';
+      const datum  = f.Datum        || '';
+      const genres = f.Genres       || '';
+      const desc   = f.Beschreibung || '';
+      const loc    = f.Location     || '';
+      const foto   = f.Foto && f.Foto[0] ? f.Foto[0].url : null;
+      const genTags = genres.split(',').map(g => g.trim()).filter(Boolean)
+        .map(g => `<span class="gig-genre">${g}</span>`).join('');
+      // encode for inline onclick
+      const n = encodeURIComponent(name), d = encodeURIComponent(datum),
+            l = encodeURIComponent(loc), de = encodeURIComponent(desc);
+      return `<div class="gig-card">
+        <div class="gig-img-wrap">
+          ${foto
+            ? `<img class="gig-img" src="${foto}" alt="${name}" loading="lazy">`
+            : `<div class="gig-img-ph"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="24" r="10" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="24" r="2" fill="currentColor"/></svg></div>`}
+        </div>
+        <div class="gig-body">
+          ${genTags ? `<div class="gig-genres">${genTags}</div>` : ''}
+          <div class="gig-name">${name}</div>
+          <div class="gig-meta">
+            ${datum ? `<div class="gig-mr"><svg viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="10" height="9" rx=".5" stroke="currentColor" stroke-width="1.2"/><path d="M1 5h10M4 1v2M8 1v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>${datum}</div>` : ''}
+            ${loc ? `<div class="gig-mr"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1C4.34 1 3 2.34 3 4c0 2.25 3 7 3 7s3-4.75 3-7c0-1.66-1.34-3-3-3z" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="4" r="1" fill="currentColor"/></svg>${loc}</div>` : ''}
+          </div>
+          ${desc ? `<div class="gig-desc">${desc}</div>` : ''}
+          <div class="gig-actions">
+            <button class="cal-btn" onclick="downloadICS(decodeURIComponent('${n}'),decodeURIComponent('${d}'),decodeURIComponent('${l}'),decodeURIComponent('${de}'))">
+              <svg viewBox="0 0 13 13" fill="none"><rect x="1" y="2" width="11" height="10" rx=".5" stroke="currentColor" stroke-width="1.2"/><path d="M1 5.5h11M4.5 1v2M8.5 1v2M4 8l1.5 1.5L9 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Kalender-Check
+            </button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    grid.innerHTML = `<p style="color:#ff3c3c;font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.14em;padding:40px 0">// Fehler: ${e.message}<br><br>Prüfe TOKEN und BASE_ID im Script.</p>`;
+  }
+}
+
+// ════════ LOAD FRANCHISE KONZEPTE ════════
+async function loadKonzepte() {
+  const grid = document.getElementById('franchise-grid');
+  try {
+    const recs = await atFetch('Konzepte');
+    if (!recs.length) {
+      grid.innerHTML = '<p style="color:rgba(15,17,23,.4);font-family:\'Space Mono\',monospace;font-size:.65rem;letter-spacing:.14em;padding:40px 0">// Keine Konzepte gefunden</p>';
+      return;
+    }
+    grid.innerHTML = recs.map(r => {
+      const f = r.fields;
+      const name     = f.Name         || 'Konzept';
+      const desc     = f.Beschreibung || '';
+      const vorteile = f.Vorteile     || '';
+      const bild     = f.Bild && f.Bild[0] ? f.Bild[0].url : null;
+      const vtItems  = vorteile.split(/[,\n]/).map(v => v.trim()).filter(Boolean)
+        .map(v => `<div class="pitch-vt">${v}</div>`).join('');
+      return `<div class="pitch-card">
+        <div class="pitch-img-wrap">
+          ${bild
+            ? `<img class="pitch-img" src="${bild}" alt="${name}" loading="lazy">`
+            : `<div class="pitch-img-ph"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="8" width="36" height="32" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 28l10-8 8 7 6-5 12 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/></svg></div>`}
+        </div>
+        <div class="pitch-body">
+          <div class="pitch-ey">// Franchise Konzept</div>
+          <div class="pitch-name">${name}</div>
+          ${desc ? `<p class="pitch-desc">${desc}</p>` : ''}
+          ${vtItems ? `<div><div class="pitch-vt-ttl">Vorteile</div>${vtItems}</div>` : ''}
+          <div class="pitch-foot">
+            <span class="pitch-foot-lbl">Interesse?</span>
+            <a href="#" class="btn-gold" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),120);return false;" style="font-size:.58rem;padding:10px 20px">Anfragen →</a>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    grid.innerHTML = `<p style="color:#c0392b;font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.14em;padding:40px 0">// Fehler: ${e.message}</p>`;
+  }
+}
+
+// ════════ LOCAL EVENTS (Admin) ════════
+const MN = ['','Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+let evData = JSON.parse(localStorage.getItem('nasa_evts') || 'null') || [
+  {id:1,title:'NASA NIGHTS Vol. 1',date:'18.07.2025',day:'18',month:'Jul',location:'Club Platzhalter, Karlsruhe',time:'23:00 Uhr',cat:'club',status:'upcoming',desc:'Erste offizielle NASA Night – DJ NASA b2b Surprise Guest.',tickets:''},
+  {id:2,title:'Corporate Summer Gala',date:'26.07.2025',day:'26',month:'Jul',location:'Messe Karlsruhe',time:'19:00 Uhr',cat:'corporate',status:'upcoming',desc:'Exklusiver Sommerabend für 300 Gäste.',tickets:''},
+  {id:3,title:'NASA NIGHTS Vol. 2',date:'15.08.2025',day:'15',month:'Aug',location:'Club Platzhalter, Karlsruhe',time:'23:00 Uhr',cat:'club',status:'upcoming',desc:'Vol. 2 – erweitertes Line-Up.',tickets:''},
+];
+function saveEv() { localStorage.setItem('nasa_evts', JSON.stringify(evData)); }
+
+function renderAdm(filter='all') {
+  const list = document.getElementById('adm-list'); if (!list) return;
+  const d = filter === 'all' ? evData : evData.filter(e => e.cat === filter);
+  list.innerHTML = d.length ? d.map(ev => `
+    <div class="adm-card" data-cat="${ev.cat}">
+      <div><div class="adm-day">${ev.day}</div><div class="adm-mon">${ev.month}</div></div>
+      <div><div class="adm-title">${ev.title}</div><div class="adm-meta">${ev.location} · ${ev.time}</div><div class="adm-desc">${ev.desc}</div></div>
+      <div class="adm-right">
+        <span class="evstat ${ev.status}">${ev.status==='upcoming'?'Upcoming':ev.status==='free'?'Eintritt frei':'Sold Out'}</span>
+        ${ev.tickets ? `<a href="${ev.tickets}" class="btn-p" target="_blank" style="font-size:.58rem;padding:9px 16px">Tickets →</a>` : ''}
+        <button class="del-btn" onclick="delEvt(${ev.id})">✕</button>
+      </div>
+    </div>`).join('')
+    : '<p style="color:rgba(245,245,240,.28);font-family:\'Space Mono\',monospace;font-size:.65rem;letter-spacing:.14em;padding:36px 0">// Keine Events</p>';
+}
+
+function renderHome() {
+  const list = document.getElementById('home-events-list'); if (!list) return;
+  list.innerHTML = evData.slice(0,3).map(ev => `
+    <div class="hev-row">
+      <div class="hev-date">${ev.date}</div>
+      <div class="hev-info"><div class="hev-title">${ev.title}</div><div class="hev-meta">${ev.location} · ${ev.time}</div></div>
+      <span class="hev-tag">${ev.cat==='club'?'Club Night':ev.cat==='corporate'?'Corporate':'Festival'}</span>
+    </div>`).join('');
+}
+
+function filterEvts(cat, btn) { document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderAdm(cat); }
+function delEvt(id) { evData = evData.filter(e => e.id !== id); saveEv(); renderAdm('all'); renderHome(); }
+function openModal() { document.getElementById('modal').classList.add('open'); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+
+function addEvt(e) {
+  e.preventDefault();
+  const ds = document.getElementById('ev-date').value, p = ds.split('.');
+  const nev = { id: Date.now(), title: document.getElementById('ev-title').value, date: ds, day: p[0], month: MN[parseInt(p[1])] || p[1], location: document.getElementById('ev-loc').value, time: document.getElementById('ev-time').value, cat: document.getElementById('ev-cat').value, status: document.getElementById('ev-status').value, desc: document.getElementById('ev-desc').value, tickets: document.getElementById('ev-tickets').value };
+  evData.push(nev);
+  evData.sort((a,b) => { const td = s => { const q = s.split('.'); return new Date(q[2],q[1]-1,q[0]); }; return td(a.date)-td(b.date); });
+  saveEv(); renderAdm('all'); renderHome(); closeModal(); e.target.reset();
+}
+
+// ════════ PAGE ROUTER ════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('nav-'+name); if (el) el.classList.add('active');
+  window.scrollTo({ top:0, behavior:'smooth' });
+  setTimeout(initReveal, 80);
+  if (name === 'events')    renderAdm('all');
+  if (name === 'home')      renderHome();
+  if (name === 'gigs')      loadGigs();
+  if (name === 'franchise') loadKonzepte();
+}
+
+// ════════ SCROLL REVEAL ════════
+function initReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.target); } });
+  }, { threshold:.08 });
+  document.querySelectorAll('.page.active .reveal').forEach(el => { el.classList.remove('visible'); obs.observe(el); });
+}
+initReveal(); renderHome();
+
+// ════════ CURSOR ════════
+const cur = document.getElementById('cursor'), curR = document.getElementById('cursor-ring');
+let mx=-100, my=-100, rx=-100, ry=-100;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function a(){ cur.style.left=mx+'px'; cur.style.top=my+'px'; rx+=(mx-rx)*.12; ry+=(my-ry)*.12; curR.style.left=rx+'px'; curR.style.top=ry+'px'; requestAnimationFrame(a); })();
+document.querySelectorAll('a,button,select').forEach(el => {
+  el.addEventListener('mouseenter', () => { curR.style.width='52px'; curR.style.height='52px'; curR.style.opacity='.35'; });
+  el.addEventListener('mouseleave', () => { curR.style.width='36px'; curR.style.height='36px'; curR.style.opacity='1'; });
 });
 
-// ─── PAGE ROUTING ────────────────────────────────────────────────────────────
-function showPage(name){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  const navEl = document.getElementById('nav-'+name);
-  if(navEl) navEl.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  setTimeout(initReveal,100);
-  if(name==='events') renderEvents('all');
-  if(name==='home') renderHomeEvents();
-  return false;
-}
-
-// ─── SCROLL REVEAL ───────────────────────────────────────────────────────────
-function initReveal(){
-  const els = document.querySelectorAll('.page.active .reveal');
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach((e,i)=>{
-      if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target);}
-    });
-  },{threshold:.1});
-  els.forEach(el=>{el.classList.remove('visible');obs.observe(el);});
-}
-initReveal();
-
-// ─── EVENTS RENDER ───────────────────────────────────────────────────────────
-function renderEvents(filter){
-  const list = document.getElementById('events-list');
-  if(!list) return;
-  const filtered = filter==='all' ? eventsData : eventsData.filter(e=>e.cat===filter);
-  list.innerHTML = filtered.length ? filtered.map(ev=>`
-    <div class="event-card" data-cat="${ev.cat}">
-      <div class="event-card-date">
-        <div class="event-card-day">${ev.day||ev.date.split('.')[0]}</div>
-        <div class="event-card-month">${ev.month||['','Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'][parseInt(ev.date.split('.')[1])]||ev.date.split('.')[1]}</div>
-      </div>
-      <div>
-        <div class="event-card-title">${ev.title}</div>
-        <div class="event-card-meta">${ev.location} · ${ev.time}</div>
-        <div class="event-card-desc">${ev.desc}</div>
-      </div>
-      <div class="event-card-right">
-        <span class="event-status ${ev.status}">${ev.status==='upcoming'?'Upcoming':ev.status==='free'?'Eintritt frei':'Sold Out'}</span>
-        ${ev.tickets ? `<a href="${ev.tickets}" class="event-ticket-btn" target="_blank">Tickets →</a>` : ''}
-        <button onclick="deleteEvent(${ev.id})" style="background:none;border:1px solid rgba(245,245,240,.08);color:rgba(245,245,240,.2);font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.1em;padding:6px 12px;cursor:none;transition:color .2s,border-color .2s;" onmouseenter="this.style.color='#ff003c';this.style.borderColor='#ff003c';" onmouseleave="this.style.color='rgba(245,245,240,.2)';this.style.borderColor='rgba(245,245,240,.08)';">✕</button>
-      </div>
-    </div>
-  `).join('') : '<p style="color:rgba(245,245,240,.3);font-family:\'Space Mono\',monospace;font-size:.7rem;letter-spacing:.15em;padding:40px 0;">// Keine Events in dieser Kategorie</p>';
-}
-
-function renderHomeEvents(){
-  const list = document.getElementById('home-events-list');
-  if(!list) return;
-  const next3 = eventsData.slice(0,3);
-  list.innerHTML = next3.map(ev=>`
-    <div class="event-row">
-      <div class="event-date">${ev.date}</div>
-      <div class="event-info">
-        <div class="event-title">${ev.title}</div>
-        <div class="event-meta">${ev.location} · ${ev.time}</div>
-      </div>
-      <span class="event-tag">${ev.cat==='club'?'Club Night':ev.cat==='corporate'?'Corporate':'Festival'}</span>
-    </div>
-  `).join('');
-}
-renderHomeEvents();
-
-function filterEvents(cat, btn){
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderEvents(cat);
-}
-
-function deleteEvent(id){
-  eventsData = eventsData.filter(e=>e.id!==id);
-  saveEvents();
-  renderEvents('all');
-  renderHomeEvents();
-}
-
-// ─── ADD EVENT MODAL ─────────────────────────────────────────────────────────
-function openModal(){ document.getElementById('modal').classList.add('open'); }
-function closeModal(){ document.getElementById('modal').classList.remove('open'); }
-document.getElementById('modal').addEventListener('click',e=>{ if(e.target.id==='modal') closeModal(); });
-
-function addEvent(e){
-  e.preventDefault();
-  const dateStr = document.getElementById('ev-date').value;
-  const parts = dateStr.split('.');
-  const monthNames = ['','Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-  const newEv = {
-    id: Date.now(),
-    title: document.getElementById('ev-title').value,
-    date: dateStr,
-    day: parts[0],
-    month: monthNames[parseInt(parts[1])] || parts[1],
-    location: document.getElementById('ev-location').value,
-    time: document.getElementById('ev-time').value,
-    cat: document.getElementById('ev-cat').value,
-    status: document.getElementById('ev-status').value,
-    desc: document.getElementById('ev-desc').value,
-    tickets: document.getElementById('ev-tickets').value,
-  };
-  eventsData.unshift(newEv);
-  eventsData.sort((a,b)=>{
-    const toDate = s => { const p=s.split('.'); return new Date(p[2],p[1]-1,p[0]); };
-    return toDate(a.date)-toDate(b.date);
-  });
-  saveEvents();
-  renderEvents('all');
-  renderHomeEvents();
-  closeModal();
-  e.target.reset();
-}
-
-// ─── THREE.JS HERO ───────────────────────────────────────────────────────────
+// ════════ THREE.JS HERO ════════
 (function(){
-  const canvas = document.getElementById('three-canvas');
-  const parent = canvas.parentElement;
-  const renderer = new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  renderer.setSize(parent.offsetWidth,parent.offsetHeight);
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60,parent.offsetWidth/parent.offsetHeight,.1,100);
-  camera.position.set(0,0,5);
-
-  const count=2000, pos=new Float32Array(count*3), spd=new Float32Array(count);
-  for(let i=0;i<count;i++){pos[i*3]=(Math.random()-.5)*22;pos[i*3+1]=(Math.random()-.5)*22;pos[i*3+2]=(Math.random()-.5)*22;spd[i]=.002+Math.random()*.004;}
+  const cv=document.getElementById('three-canvas'),par=cv.parentElement;
+  const r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+  r.setPixelRatio(Math.min(devicePixelRatio,2)); r.setSize(par.offsetWidth,par.offsetHeight);
+  const sc=new THREE.Scene(), cam=new THREE.PerspectiveCamera(60,par.offsetWidth/par.offsetHeight,.1,100);
+  cam.position.set(0,0,5);
+  const N=2000, pos=new Float32Array(N*3), spd=new Float32Array(N);
+  for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*22;pos[i*3+1]=(Math.random()-.5)*22;pos[i*3+2]=(Math.random()-.5)*22;spd[i]=.002+Math.random()*.004;}
   const geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  scene.add(new THREE.Points(geo,new THREE.PointsMaterial({color:0x00ffea,size:.042,transparent:true,opacity:.65})));
-
-  const knot=new THREE.Mesh(new THREE.TorusKnotGeometry(1.1,.3,160,18,2,3),new THREE.MeshBasicMaterial({color:0x00ffea,wireframe:true,transparent:true,opacity:.15}));
-  knot.position.set(3.8,.2,-2); scene.add(knot);
-
-  const ring=new THREE.Mesh(new THREE.TorusGeometry(2,.01,8,120),new THREE.MeshBasicMaterial({color:0x00ffea,transparent:true,opacity:.1}));
-  ring.rotation.x=Math.PI/2.5; ring.position.copy(knot.position); scene.add(ring);
-
-  const grid=new THREE.GridHelper(30,30,0x00ffea,0x00ffea);
-  grid.position.y=-4.5; grid.material.opacity=.035; grid.material.transparent=true; scene.add(grid);
-
-  let mouseX=0,mouseY=0;
-  document.addEventListener('mousemove',e=>{mouseX=(e.clientX/innerWidth-.5)*2;mouseY=(e.clientY/innerHeight-.5)*2;});
-
-  function animate(){
-    requestAnimationFrame(animate);
-    knot.rotation.x+=.003; knot.rotation.y+=.005; ring.rotation.z+=.004;
-    const p=geo.attributes.position.array;
-    for(let i=0;i<count;i++){p[i*3+1]+=spd[i];if(p[i*3+1]>11)p[i*3+1]=-11;}
-    geo.attributes.position.needsUpdate=true;
-    camera.position.x+=(mouseX*.5-camera.position.x)*.03;
-    camera.position.y+=(-mouseY*.3-camera.position.y)*.03;
-    camera.lookAt(scene.position);
-    renderer.render(scene,camera);
-  }
-  animate();
-  window.addEventListener('resize',()=>{renderer.setSize(parent.offsetWidth,parent.offsetHeight);camera.aspect=parent.offsetWidth/parent.offsetHeight;camera.updateProjectionMatrix();});
+  sc.add(new THREE.Points(geo,new THREE.PointsMaterial({color:0x00ffea,size:.04,transparent:true,opacity:.62})));
+  const knot=new THREE.Mesh(new THREE.TorusKnotGeometry(1.1,.3,160,18,2,3),new THREE.MeshBasicMaterial({color:0x00ffea,wireframe:true,transparent:true,opacity:.13}));
+  knot.position.set(3.8,.2,-2); sc.add(knot);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(2,.01,8,120),new THREE.MeshBasicMaterial({color:0x00ffea,transparent:true,opacity:.09}));
+  ring.rotation.x=Math.PI/2.5; ring.position.copy(knot.position); sc.add(ring);
+  const grid=new THREE.GridHelper(30,30,0x00ffea,0x00ffea); grid.position.y=-4.5; grid.material.opacity=.03; grid.material.transparent=true; sc.add(grid);
+  let mX=0,mY=0; document.addEventListener('mousemove',e=>{mX=(e.clientX/innerWidth-.5)*2;mY=(e.clientY/innerHeight-.5)*2;});
+  (function a(){ requestAnimationFrame(a); knot.rotation.x+=.003; knot.rotation.y+=.005; ring.rotation.z+=.004;
+    const p=geo.attributes.position.array; for(let i=0;i<N;i++){p[i*3+1]+=spd[i];if(p[i*3+1]>11)p[i*3+1]=-11;} geo.attributes.position.needsUpdate=true;
+    cam.position.x+=(mX*.5-cam.position.x)*.03; cam.position.y+=(-mY*.3-cam.position.y)*.03; cam.lookAt(sc.position); r.render(sc,cam); })();
+  window.addEventListener('resize',()=>{r.setSize(par.offsetWidth,par.offsetHeight);cam.aspect=par.offsetWidth/par.offsetHeight;cam.updateProjectionMatrix();});
 })();
 
-// ─── THREE.JS ABOUT ──────────────────────────────────────────────────────────
+// ════════ THREE.JS ABOUT ════════
 (function(){
-  const canvas=document.getElementById('about-canvas');
-  const wrap=canvas.parentElement;
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  renderer.setSize(wrap.offsetWidth,wrap.offsetHeight);
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(50,wrap.offsetWidth/wrap.offsetHeight,.1,100);
-  camera.position.set(0,0,4);
-  const ico=new THREE.Mesh(new THREE.IcosahedronGeometry(1.3,1),new THREE.MeshBasicMaterial({color:0x00ffea,wireframe:true,transparent:true,opacity:.22}));
-  scene.add(ico);
-  const sph=new THREE.Mesh(new THREE.SphereGeometry(1.85,32,32),new THREE.MeshBasicMaterial({color:0x00ffea,wireframe:true,transparent:true,opacity:.045}));
-  scene.add(sph);
-  const dot=new THREE.Mesh(new THREE.SphereGeometry(.055,8,8),new THREE.MeshBasicMaterial({color:0x00ffea}));
-  scene.add(dot);
-  let t=0;
-  function animate(){requestAnimationFrame(animate);t+=.012;ico.rotation.x+=.004;ico.rotation.y+=.007;sph.rotation.y-=.003;dot.position.set(Math.cos(t)*1.85,Math.sin(t*.7)*1.85,Math.sin(t)*1);renderer.render(scene,camera);}
-  animate();
-  window.addEventListener('resize',()=>{renderer.setSize(wrap.offsetWidth,wrap.offsetHeight);camera.aspect=wrap.offsetWidth/wrap.offsetHeight;camera.updateProjectionMatrix();});
+  const cv=document.getElementById('about-canvas'),w=cv.parentElement;
+  const r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+  r.setPixelRatio(Math.min(devicePixelRatio,2)); r.setSize(w.offsetWidth,w.offsetHeight);
+  const sc=new THREE.Scene(), cam=new THREE.PerspectiveCamera(50,w.offsetWidth/w.offsetHeight,.1,100); cam.position.set(0,0,4);
+  const ico=new THREE.Mesh(new THREE.IcosahedronGeometry(1.3,1),new THREE.MeshBasicMaterial({color:0x00ffea,wireframe:true,transparent:true,opacity:.22})); sc.add(ico);
+  const sph=new THREE.Mesh(new THREE.SphereGeometry(1.85,32,32),new THREE.MeshBasicMaterial({color:0x00ffea,wireframe:true,transparent:true,opacity:.04})); sc.add(sph);
+  const dot=new THREE.Mesh(new THREE.SphereGeometry(.055,8,8),new THREE.MeshBasicMaterial({color:0x00ffea})); sc.add(dot);
+  let t=0; (function a(){ requestAnimationFrame(a); t+=.012; ico.rotation.x+=.004; ico.rotation.y+=.007; sph.rotation.y-=.003; dot.position.set(Math.cos(t)*1.85,Math.sin(t*.7)*1.85,Math.sin(t)); r.render(sc,cam); })();
+  window.addEventListener('resize',()=>{r.setSize(w.offsetWidth,w.offsetHeight);cam.aspect=w.offsetWidth/w.offsetHeight;cam.updateProjectionMatrix();});
 })();
 
-// ─── THREE.JS DJ PAGE ────────────────────────────────────────────────────────
+// ════════ THREE.JS DJ ════════
 (function(){
-  const canvas=document.getElementById('dj-canvas');
-  if(!canvas) return;
-  const wrap=canvas.parentElement;
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  renderer.setSize(wrap.offsetWidth,wrap.offsetHeight);
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(60,wrap.offsetWidth/wrap.offsetHeight,.1,100);
-  camera.position.set(0,0,4);
-
-  // Vinyl record
-  const vinyl=new THREE.Mesh(new THREE.TorusGeometry(1.4,.06,16,80),new THREE.MeshBasicMaterial({color:0x00ffea,transparent:true,opacity:.2}));
-  scene.add(vinyl);
-  const inner=new THREE.Mesh(new THREE.TorusGeometry(.7,.04,12,60),new THREE.MeshBasicMaterial({color:0x00ffea,transparent:true,opacity:.15}));
-  scene.add(inner);
-  const center=new THREE.Mesh(new THREE.CircleGeometry(.18,32),new THREE.MeshBasicMaterial({color:0x00ffea,transparent:true,opacity:.3}));
-  scene.add(center);
-
-  // Particles
-  const count=600,pos=new Float32Array(count*3);
-  for(let i=0;i<count;i++){const a=Math.random()*Math.PI*2,r=1+Math.random()*2;pos[i*3]=Math.cos(a)*r;pos[i*3+1]=(Math.random()-.5)*3;pos[i*3+2]=Math.sin(a)*r;}
-  const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({color:0x00ffea,size:.03,transparent:true,opacity:.5})));
-
-  function animate(){requestAnimationFrame(animate);vinyl.rotation.z+=.008;inner.rotation.z-=.012;center.rotation.z+=.02;renderer.render(scene,camera);}
-  animate();
-  window.addEventListener('resize',()=>{renderer.setSize(wrap.offsetWidth,wrap.offsetHeight);camera.aspect=wrap.offsetWidth/wrap.offsetHeight;camera.updateProjectionMatrix();});
+  const cv=document.getElementById('dj-canvas'),w=cv.parentElement;
+  const r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+  r.setPixelRatio(Math.min(devicePixelRatio,2)); r.setSize(w.offsetWidth,w.offsetHeight);
+  const sc=new THREE.Scene(), cam=new THREE.PerspectiveCamera(60,w.offsetWidth/w.offsetHeight,.1,100); cam.position.set(0,0,4);
+  const vinyl=new THREE.Mesh(new THREE.TorusGeometry(1.4,.06,16,80),new THREE.MeshBasicMaterial({color:0x00ffea,transparent:true,opacity:.2})); sc.add(vinyl);
+  const v2=new THREE.Mesh(new THREE.TorusGeometry(.7,.04,12,60),new THREE.MeshBasicMaterial({color:0x00ffea,transparent:true,opacity:.14})); sc.add(v2);
+  const N=600, p=new Float32Array(N*3);
+  for(let i=0;i<N;i++){const a=Math.random()*Math.PI*2,rr=1+Math.random()*2;p[i*3]=Math.cos(a)*rr;p[i*3+1]=(Math.random()-.5)*3;p[i*3+2]=Math.sin(a)*rr;}
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  sc.add(new THREE.Points(g,new THREE.PointsMaterial({color:0x00ffea,size:.03,transparent:true,opacity:.44})));
+  (function a(){ requestAnimationFrame(a); vinyl.rotation.z+=.008; v2.rotation.z-=.012; r.render(sc,cam); })();
+  window.addEventListener('resize',()=>{r.setSize(w.offsetWidth,w.offsetHeight);cam.aspect=w.offsetWidth/w.offsetHeight;cam.updateProjectionMatrix();});
 })();
 
-// ─── FORM ────────────────────────────────────────────────────────────────────
-function handleSubmit(e){
-  e.preventDefault();
-  const btn=e.target.querySelector('button');
-  btn.textContent='✓ Gesendet!';
-  setTimeout(()=>{btn.textContent='Nachricht senden →';e.target.reset();},3000);
-}
-</script>
- <div id="event-liste" style="display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-  </div>
-
-<script>
-  const TOKEN = 'patmNHDR5qubWaDr1.465f8eff55d506f31e2e4bf6507902be92bf580b32686279a42692e47e59f63f'; 
-  const BASE_ID = 'appYQDlrfupnI17zQ';
-  const TABELLE = 'Events';
-
-  async function ladeEvents() {
-    const box = document.getElementById('event-liste');
-    try {
-      const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${TABELLE}`, {
-        headers: { Authorization: `Bearer ${TOKEN}` }
-      });
-      const data = await response.json();
-
-      box.innerHTML = ""; 
-
-      data.records.forEach(record => {
-        const f = record.fields;
-        
-        // Deine Spalten (Achte auf Großschreibung am Anfang!)
-        const name = f.Name || "Event ohne Namen";
-        const datum = f.Datum || "Termin folgt";
-        const genres = f.Genres || "";
-        const beschreibung = f.Beschreibung || "";
-        const location = f.Location || "";
-        const foto = f.Foto && f.Foto[0] ? f.Foto[0].url : 'https://via.placeholder.com/400x250?text=Kein+Bild';
-
-        box.innerHTML += `
-          <div style="width: 320px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.15); color: #333; transition: transform 0.2s;">
-            <div style="height: 180px; background: url('${foto}') center/cover no-repeat;"></div>
-            <div style="padding: 15px;">
-              <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #ff4757; font-weight: bold;">${genres}</span>
-              <h3 style="margin: 5px 0 10px 0; font-size: 1.3rem; color: #2f3542;">${name}</h3>
-              <div style="font-size: 0.9rem; color: #57606f; margin-bottom: 8px;">
-                <strong>📍</strong> ${location}
-              </div>
-              <div style="font-size: 0.9rem; color: #57606f; margin-bottom: 12px;">
-                <strong>📅</strong> ${datum}
-              </div>
-              <p style="font-size: 0.85rem; line-height: 1.5; color: #747d8c; border-top: 1px solid #f1f2f6; pt: 10px; padding-top: 10px;">
-                ${beschreibung}
-              </p>
-            </div>
-          </div>
-        `;
-      });
-    } catch (e) {
-      box.innerHTML = "Fehler beim Laden der Galerie.";
-    }
-  }
-  ladeEvents();
-</script>
-</script>
-</script>
-</script>
+function handleSubmit(e){ e.preventDefault(); const b=e.target.querySelector('button'); b.textContent='✓ Gesendet!'; setTimeout(()=>{b.textContent='Nachricht senden →';e.target.reset();},3000); }
 </script>
 </body>
 </html>
